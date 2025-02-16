@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import signal
 
+# Define convolutional layer
 class Convolutional:
     def __init__(self, input_shape, kernel_size, depth):
         input_depth, input_height, input_width = input_shape

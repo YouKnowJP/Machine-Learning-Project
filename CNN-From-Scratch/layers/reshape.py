@@ -1,6 +1,6 @@
 import numpy as np
 
-
+# Define reshape layer
 class Reshape:
     def __init__(self, input_shape, output_shape):
         self.input_shape = input_shape

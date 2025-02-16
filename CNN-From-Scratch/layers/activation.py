@@ -1,11 +1,10 @@
 import numpy as np
 
-
+# Define activation function
 class Activation:
     def __init__(self, function, derivative):
         self.function = function
         self.derivative = derivative
-
 
 class ReLU(Activation):
     def __init__(self):
@@ -16,7 +15,6 @@ class ReLU(Activation):
             return (x > 0).astype(float)
 
         super().__init__(relu, relu_prime)
-
 
 class Softmax:
     def forward(self, x):

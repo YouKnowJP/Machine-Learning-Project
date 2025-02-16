@@ -1,5 +1,6 @@
 import numpy as np
 
+# Define fully connected layer
 class FullyConnected:
     def __init__(self, input_size, output_size):
         self.weights = np.random.randn(output_size, input_size) * 0.1
