@@ -8,6 +8,14 @@ pygame.init()
 # Use system font as fallback if arial.ttf is missing
 font = pygame.font.SysFont('arial', 25)
 
+# Need to implement reset
+# award
+# play(direction) -> direction
+# game_iteration
+# collision
+
+
+
 class Direction(Enum):
     RIGHT = 1
     LEFT = 2
