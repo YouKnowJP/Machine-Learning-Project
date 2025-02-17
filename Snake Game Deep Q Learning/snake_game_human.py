@@ -1,4 +1,3 @@
-# snake game human play
 import pygame
 import random
 from enum import Enum
@@ -29,9 +28,8 @@ class Direction(Enum):
 # Define a point for snake parts and food
 Point = namedtuple('Point', 'x y')
 
-
 class SnakeGame:
-    """A simple Snake game using pygame."""
+    """A simple Snake game using pygame with wall wrapping."""
 
     def __init__(self, width=640, height=480):
         """Initialize the game state and set up the display."""
@@ -86,7 +84,7 @@ class SnakeGame:
         self._move(self.direction)
         self.snake.insert(0, self.head)
 
-        # 3. Check for collisions
+        # 3. Check for self-collision
         if self._is_collision():
             return True, self.score
 
@@ -117,15 +115,8 @@ class SnakeGame:
             self.direction = Direction.DOWN
 
     def _is_collision(self):
-        """Return True if the snake collides with the wall or itself."""
-        # Check wall collision
-        if (self.head.x < 0 or self.head.x >= self.width or
-                self.head.y < 0 or self.head.y >= self.height):
-            return True
-        # Check self collision
-        if self.head in self.snake[1:]:
-            return True
-        return False
+        """Return True if the snake collides with itself."""
+        return self.head in self.snake[1:]
 
     def _update_ui(self):
         """Update the display with the current snake, food, and score."""
@@ -145,7 +136,7 @@ class SnakeGame:
         pygame.display.flip()
 
     def _move(self, direction):
-        """Move the snake's head in the specified direction."""
+        """Move the snake's head in the specified direction, wrapping around the screen."""
         x, y = self.head.x, self.head.y
         if direction == Direction.RIGHT:
             x += BLOCK_SIZE
@@ -155,8 +146,11 @@ class SnakeGame:
             y -= BLOCK_SIZE
         elif direction == Direction.DOWN:
             y += BLOCK_SIZE
-        self.head = Point(x, y)
 
+        # Wrap around the screen edges
+        x = x % self.width
+        y = y % self.height
+        self.head = Point(x, y)
 
 def main():
     """Main function to run the Snake game."""
@@ -169,7 +163,6 @@ def main():
             break
 
     pygame.quit()
-
 
 if __name__ == '__main__':
     main()
