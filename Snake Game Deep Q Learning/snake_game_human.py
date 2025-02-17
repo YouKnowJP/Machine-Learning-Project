@@ -8,7 +8,7 @@ pygame.init()
 
 # Global constants
 BLOCK_SIZE = 20
-SPEED = 10
+SPEED = 15
 WHITE = (255, 255, 255)
 RED = (200, 0, 0)
 BLUE1 = (0, 0, 255)
