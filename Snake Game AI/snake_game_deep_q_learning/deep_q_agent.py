@@ -1,4 +1,4 @@
-# agent.py
+# deep_q_agent.py
 import os
 import torch
 import random
@@ -7,7 +7,7 @@ import pickle  # Use pickle for saving/loading the memory
 from collections import deque
 from typing import List
 from game import SnakeGameAI, Direction, Point
-from model import Linear_QNet, QTrainer
+from deep_q_model import Linear_QNet, QTrainer
 from helper import plot
 import config
 

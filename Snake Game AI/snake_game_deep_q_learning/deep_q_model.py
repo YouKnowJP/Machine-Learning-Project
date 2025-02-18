@@ -1,9 +1,8 @@
-# model.py
+# deep_q_model.py
 import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 from typing import Union, Any
 import config
 
