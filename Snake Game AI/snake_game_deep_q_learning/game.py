@@ -1,9 +1,15 @@
-# game.py
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Feb 18 23:11:36 2025
+
+@author: youknowjp
+"""
+
 import pygame
 import random
 from enum import Enum
 from collections import namedtuple
-import numpy as np
 from typing import Optional, Tuple, List
 import config
 
@@ -32,9 +38,8 @@ BLOCK_SIZE = config.BLOCK_SIZE
 SPEED = config.SPEED
 
 class SnakeGameAI:
-    """
-    Snake game with an AI interface.
-    """
+    """Snake game with AI interface."""
+
     def __init__(self, w: int = 640, h: int = 480) -> None:
         self.w = w
         self.h = h
@@ -44,6 +49,7 @@ class SnakeGameAI:
         self.reset()
 
     def reset(self) -> None:
+        """Resets the game state."""
         self.direction = Direction.RIGHT
         self.head = Point(self.w // 2, self.h // 2)
         self.snake = [
@@ -57,17 +63,18 @@ class SnakeGameAI:
         self.frame_iteration = 0
 
     def _place_food(self) -> None:
+        """Places food at a random valid location."""
         while True:
-            x = random.randint(0, (self.w - BLOCK_SIZE) // BLOCK_SIZE) * BLOCK_SIZE
-            y = random.randint(0, (self.h - BLOCK_SIZE) // BLOCK_SIZE) * BLOCK_SIZE
+            x = random.randrange(0, self.w, BLOCK_SIZE)
+            y = random.randrange(0, self.h, BLOCK_SIZE)
             self.food = Point(x, y)
             if self.food not in self.snake:
                 break
 
     def play_step(self, action: List[int]) -> Tuple[int, bool, int]:
+        """Executes a single game step."""
         self.frame_iteration += 1
 
-        # Process pygame events.
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -95,41 +102,40 @@ class SnakeGameAI:
         return reward, game_over, self.score
 
     def is_collision(self, pt: Optional[Point] = None) -> bool:
+        """Checks for collisions."""
         if pt is None:
             pt = self.head
-
-        if pt.x >= self.w or pt.x < 0 or pt.y >= self.h or pt.y < 0:
-            return True
-
-        if pt in self.snake[1:]:
-            return True
-
-        return False
+        return pt.x >= self.w or pt.x < 0 or pt.y >= self.h or pt.y < 0 or pt in self.snake[1:]
 
     def _update_ui(self) -> None:
+        """Updates the game display."""
         self.display.fill(BLACK)
         for pt in self.snake:
             pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
-            inner_rect = pygame.Rect(pt.x + 4, pt.y + 4, BLOCK_SIZE - 8, BLOCK_SIZE - 8)
-            pygame.draw.rect(self.display, BLUE2, inner_rect)
+            pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x + 4, pt.y + 4, BLOCK_SIZE - 8, BLOCK_SIZE - 8))
         pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
-        text_surface = font.render(f"Score: {self.score}", True, WHITE)
-        self.display.blit(text_surface, (0, 0))
+        text = font.render(f"Score: {self.score}", True, WHITE)
+        self.display.blit(text, (0, 0))
         pygame.display.flip()
 
     def _move(self, action: List[int]) -> None:
+        """Moves the snake based on the action."""
         clock_wise = [Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP]
         current_index = clock_wise.index(self.direction)
-        if action == [1, 0, 0]:
+        if sum(action) !=1:
             new_dir = clock_wise[current_index]
-        elif action == [0, 1, 0]:
-            next_index = (current_index + 1) % 4
-            new_dir = clock_wise[next_index]
-        elif action == [0, 0, 1]:
-            next_index = (current_index - 1) % 4
-            new_dir = clock_wise[next_index]
         else:
-            new_dir = clock_wise[current_index]
+
+            if action == [1, 0, 0]:
+                new_dir = clock_wise[current_index]
+            elif action == [0, 1, 0]:
+                new_index = (current_index + 1) % 4
+                new_dir = clock_wise[new_index]
+            elif action == [0, 0, 1]:
+                new_index = (current_index - 1) % 4
+                new_dir = clock_wise[new_index]
+            else:
+                new_dir = clock_wise[current_index]
 
         self.direction = new_dir
 
