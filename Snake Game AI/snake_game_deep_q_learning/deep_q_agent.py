@@ -1,9 +1,16 @@
-# deep_q_agent.py
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Feb 18 23:11:36 2025
+
+@author: youknowjp
+"""
+
 import os
 import torch
 import random
 import numpy as np
-import pickle  # Use pickle for saving/loading the memory
+import pickle
 from collections import deque
 from typing import List
 from game import SnakeGameAI, Direction, Point
@@ -11,7 +18,6 @@ from deep_q_model import Linear_QNet, QTrainer
 from helper import plot
 import config
 
-# Use configuration values from config.py
 MAX_MEMORY = config.MAX_MEMORY
 BATCH_SIZE = config.BATCH_SIZE
 LR = config.LR
@@ -26,19 +32,18 @@ GAME_COUNT_FILE = os.path.join(MODEL_FOLDER, config.GAME_COUNT_FILE)
 
 
 class Agent:
-    """
-    Reinforcement Learning agent for the Snake game using Q-learning.
-    """
+    """Reinforcement Learning agent for the Snake game using Q-learning."""
 
     def __init__(self) -> None:
         self.n_games = 0
-        self.epsilon = 0  # Exploration rate
+        self.epsilon = 0
         self.gamma = GAMMA
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(11, 256, 3)
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, game: SnakeGameAI) -> np.ndarray:
+        """Returns the current state of the game."""
         head = game.snake[0]
         block_size = config.BLOCK_SIZE
         point_l = Point(head.x - block_size, head.y)
@@ -46,25 +51,29 @@ class Agent:
         point_u = Point(head.x, head.y - block_size)
         point_d = Point(head.x, head.y + block_size)
 
-        # Direction flags
         dir_l = game.direction == Direction.LEFT
         dir_r = game.direction == Direction.RIGHT
         dir_u = game.direction == Direction.UP
         dir_d = game.direction == Direction.DOWN
 
-        # Danger checks: straight, right, left
-        danger_straight = ((dir_r and game.is_collision(point_r)) or
-                           (dir_l and game.is_collision(point_l)) or
-                           (dir_u and game.is_collision(point_u)) or
-                           (dir_d and game.is_collision(point_d)))
-        danger_right = ((dir_u and game.is_collision(point_r)) or
-                        (dir_d and game.is_collision(point_l)) or
-                        (dir_l and game.is_collision(point_u)) or
-                        (dir_r and game.is_collision(point_d)))
-        danger_left = ((dir_d and game.is_collision(point_r)) or
-                       (dir_u and game.is_collision(point_l)) or
-                       (dir_r and game.is_collision(point_u)) or
-                       (dir_l and game.is_collision(point_d)))
+        danger_straight = (
+            (dir_r and game.is_collision(point_r))
+            or (dir_l and game.is_collision(point_l))
+            or (dir_u and game.is_collision(point_u))
+            or (dir_d and game.is_collision(point_d))
+        )
+        danger_right = (
+            (dir_u and game.is_collision(point_r))
+            or (dir_d and game.is_collision(point_l))
+            or (dir_l and game.is_collision(point_u))
+            or (dir_r and game.is_collision(point_d))
+        )
+        danger_left = (
+            (dir_d and game.is_collision(point_r))
+            or (dir_u and game.is_collision(point_l))
+            or (dir_r and game.is_collision(point_u))
+            or (dir_l and game.is_collision(point_d))
+        )
 
         state = [
             int(danger_straight),
@@ -74,43 +83,47 @@ class Agent:
             int(dir_r),
             int(dir_u),
             int(dir_d),
-            int(game.food.x < head.x),  # Food left
-            int(game.food.x > head.x),  # Food right
-            int(game.food.y < head.y),  # Food up
-            int(game.food.y > head.y)  # Food down
+            int(game.food.x < head.x),
+            int(game.food.x > head.x),
+            int(game.food.y < head.y),
+            int(game.food.y > head.y),
         ]
         return np.array(state, dtype=int)
 
-    def remember(self, state: np.ndarray, action: List[int],
-                 reward: float, next_state: np.ndarray, done: bool) -> None:
+    def remember(self, state: np.ndarray, action: List[int], reward: float, next_state: np.ndarray, done: bool) -> None:
+        """Stores a transition in memory."""
         self.memory.append((state, action, reward, next_state, done))
 
     def train_long_memory(self) -> None:
-        if len(self.memory) > 0:
-            mini_sample = (random.sample(self.memory, BATCH_SIZE)
-                           if len(self.memory) > BATCH_SIZE else list(self.memory))
-            states, actions, rewards, next_states, dones = zip(*mini_sample)
-            self.trainer.train_step(states, actions, rewards, next_states, dones)
+        """Trains the model with a batch from memory."""
+        if len(self.memory) > BATCH_SIZE:
+            mini_sample = random.sample(self.memory, BATCH_SIZE)
+        else:
+            mini_sample = list(self.memory)
 
-    def train_short_memory(self, state: np.ndarray, action: List[int],
-                           reward: float, next_state: np.ndarray, done: bool) -> None:
+        states, actions, rewards, next_states, dones = zip(*mini_sample)
+        self.trainer.train_step(states, actions, rewards, next_states, dones)
+
+    def train_short_memory(self, state: np.ndarray, action: List[int], reward: float, next_state: np.ndarray, done: bool) -> None:
+        """Trains the model with a single transition."""
         self.trainer.train_step(state, action, reward, next_state, done)
 
     def get_action(self, state: np.ndarray) -> List[int]:
+        """Chooses an action based on epsilon-greedy policy."""
         self.epsilon = max(EPSILON_DECAY - self.n_games, 0)
-        final_move = [0, 0, 0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 2)
-            final_move[move] = 1
         else:
             state_tensor = torch.tensor(state, dtype=torch.float32)
             prediction = self.model(state_tensor)
             move = torch.argmax(prediction).item()
-            final_move[move] = 1
+        final_move = [0, 0, 0]
+        final_move[move] = 1
         return final_move
 
 
 def train() -> None:
+    """Trains the agent."""
     plot_scores = []
     plot_mean_scores = []
     total_score = 0
@@ -119,8 +132,6 @@ def train() -> None:
     agent = Agent()
     game = SnakeGameAI()
 
-    # Check if the model file exists; if yes, load model weights,
-    # then load the game count and experience memory.
     if os.path.exists(MODEL_FILE):
         print("Model found. Loading existing weights...")
         agent.model.load()
@@ -131,12 +142,10 @@ def train() -> None:
         if os.path.exists(MEMORY_FILE):
             print("Loading experience memory...")
             with open(MEMORY_FILE, "rb") as f:
-                loaded_memory = pickle.load(f)
-            agent.memory = deque(loaded_memory, maxlen=MAX_MEMORY)
+                agent.memory = deque(pickle.load(f), maxlen=MAX_MEMORY)
     else:
         print("No existing model found. Training from scratch.")
 
-    # Training loop
     while agent.n_games < MAX_GAMES:
         state_old = agent.get_state(game)
         final_move = agent.get_action(state_old)
@@ -150,17 +159,15 @@ def train() -> None:
             agent.n_games += 1
             agent.train_long_memory()
 
-            if score > record:
-                record = score
-
+            record = max(record, score)
             print(f"Game: {agent.n_games}, Score: {score}, Record: {record}")
+
             plot_scores.append(score)
             total_score += score
             mean_score = total_score / agent.n_games
             plot_mean_scores.append(mean_score)
             plot(plot_scores, plot_mean_scores)
 
-            # Save a checkpoint once per finished game if it's time.
             if agent.n_games % SAVE_INTERVAL == 0:
                 agent.trainer.save_model()
                 print(f"Checkpoint saved at {agent.n_games} games.")
@@ -169,7 +176,6 @@ def train() -> None:
                 with open(MEMORY_FILE, "wb") as f:
                     pickle.dump(list(agent.memory), f)
 
-    # Final save after training is complete.
     agent.trainer.save_model()
     print(f"Training finished after {MAX_GAMES} games. Model saved.")
     with open(GAME_COUNT_FILE, "w") as f:
@@ -178,5 +184,5 @@ def train() -> None:
         pickle.dump(list(agent.memory), f)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     train()
