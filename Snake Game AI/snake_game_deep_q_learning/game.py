@@ -71,9 +71,10 @@ class SnakeGameAI:
             if self.food not in self.snake:
                 break
 
-    def play_step(self, action: List[int]) -> Tuple[int, bool, int]:
-        """Executes a single game step."""
+    def play_step(self, action: List[int]) -> Tuple[float, bool, int]:
         self.frame_iteration += 1
+        # Calculate Manhattan distance before moving
+        old_distance = abs(self.head.x - self.food.x) + abs(self.head.y - self.food.y)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -85,17 +86,20 @@ class SnakeGameAI:
 
         reward = 0
         game_over = False
-        if self.is_collision() or self.frame_iteration > 100 * len(self.snake):
+        if self.is_collision() or self.frame_iteration > 150 * len(self.snake):
             game_over = True
-            reward = -10
+            reward = -1
             return reward, game_over, self.score
 
         if self.head == self.food:
             self.score += 1
-            reward = 10
+            reward = 1
             self._place_food()
         else:
             self.snake.pop()
+            new_distance = abs(self.head.x - self.food.x) + abs(self.head.y - self.food.y)
+            max_distance = (self.w + self.h) / 2
+            reward = (old_distance - new_distance) / max_distance
 
         self._update_ui()
         self.clock.tick(SPEED)
@@ -122,10 +126,9 @@ class SnakeGameAI:
         """Moves the snake based on the action."""
         clock_wise = [Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP]
         current_index = clock_wise.index(self.direction)
-        if sum(action) !=1:
+        if sum(action) != 1:
             new_dir = clock_wise[current_index]
         else:
-
             if action == [1, 0, 0]:
                 new_dir = clock_wise[current_index]
             elif action == [0, 1, 0]:
@@ -136,7 +139,6 @@ class SnakeGameAI:
                 new_dir = clock_wise[new_index]
             else:
                 new_dir = clock_wise[current_index]
-
         self.direction = new_dir
 
         x, y = self.head.x, self.head.y
@@ -150,6 +152,16 @@ class SnakeGameAI:
             y -= BLOCK_SIZE
 
         self.head = Point(x, y)
+
+    def get_astar_path(self):
+        """
+        Uses the A* algorithm to find a path from the snake's head to the food.
+        The snake's body is treated as an obstacle.
+        """
+        from astar import astar
+        obstacles = set(self.snake)
+        path = astar(self.head, self.food, obstacles, self.w, self.h, BLOCK_SIZE)
+        return path
 
 if __name__ == '__main__':
     game = SnakeGameAI()
