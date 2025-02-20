@@ -7,6 +7,7 @@ Created on Tue Feb 18 23:11:36 2025
 """
 
 import os
+import copy
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -30,7 +31,7 @@ class Linear_QNet(nn.Module):
     def save(self, file_name: str = 'model.pth') -> None:
         """Saves the model state dictionary to the specified file."""
         model_folder_path = config.MODEL_FOLDER
-        os.makedirs(model_folder_path, exist_ok=True)  # Create directory if it doesn't exist
+        os.makedirs(model_folder_path, exist_ok=True)
         file_path = os.path.join(model_folder_path, file_name)
         torch.save(self.state_dict(), file_path)
         print(f"Model saved to {file_path}")
@@ -48,13 +49,17 @@ class Linear_QNet(nn.Module):
 class QTrainer:
     """
     Q-learning trainer that performs training steps and wraps saving.
+    Uses a target network to stabilize training.
     """
-    def __init__(self, model: Linear_QNet, lr: float, gamma: float) -> None:
+    def __init__(self, model: Linear_QNet, lr: float, gamma: float, target_update_freq: int = 100) -> None:
         self.lr = lr
         self.gamma = gamma
         self.model = model
+        self.target_model = copy.deepcopy(model)
         self.optimizer = optim.Adam(model.parameters(), lr=self.lr)
         self.criterion = nn.MSELoss()
+        self.target_update_freq = target_update_freq
+        self.steps = 0
 
     def _prepare_tensors(self, state: Any, action: Any, reward: Any, next_state: Any, done: Union[bool, list]) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, Tuple[bool, ...]]:
         """Converts inputs to tensors and ensures batch dimension."""
@@ -72,14 +77,7 @@ class QTrainer:
 
         return state, action, reward, next_state, done
 
-    def train_step(
-        self,
-        state: Any,
-        action: Any,
-        reward: Any,
-        next_state: Any,
-        done: Union[bool, list]
-    ) -> None:
+    def train_step(self, state: Any, action: Any, reward: Any, next_state: Any, done: Union[bool, list]) -> None:
         """Performs a single training step."""
         state, action, reward, next_state, done = self._prepare_tensors(state, action, reward, next_state, done)
 
@@ -87,7 +85,7 @@ class QTrainer:
         target = pred.clone()
 
         with torch.no_grad():
-            next_pred = self.model(next_state)
+            next_pred = self.target_model(next_state)
 
         for idx in range(len(done)):
             Q_new = reward[idx]
@@ -99,6 +97,11 @@ class QTrainer:
         loss = self.criterion(target, pred)
         loss.backward()
         self.optimizer.step()
+
+        # Update target network periodically
+        self.steps += 1
+        if self.steps % self.target_update_freq == 0:
+            self.target_model.load_state_dict(self.model.state_dict())
 
     def save_model(self, file_name: str = 'model.pth') -> None:
         """Saves the model using the model's save method."""
