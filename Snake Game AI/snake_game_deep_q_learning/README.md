@@ -116,4 +116,4 @@ This will make the agent prioritize A* pathfinding when possible.
 
 ---
 
-This project serves as a hybrid approach to reinforcement learning and algorithmic pathfinding, demonstrating how **Deep Q-Learning** and **A* search** can work together to solve a classic game problem. 🚀
+This project serves as a hybrid approach to reinforcement learning and algorithmic pathfinding, demonstrating how **Deep Q-Learning** and **A* search** can work together to solve a classic game problem.
