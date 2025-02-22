@@ -3,7 +3,7 @@
 
 ---
 
-## 📌 **Table of Contents**
+## **Table of Contents**
 - [Overview](#overview)
 - [Installation](#installation)
 - [How It Works](#how-it-works)
@@ -18,7 +18,7 @@
 
 ---
 
-## 🎯 **Overview**
+## **Overview**
 This project implements a **Pong AI** using the **NEAT (NeuroEvolution of Augmenting Topologies)** algorithm. The AI starts with random paddle movements and **evolves through self-play**, improving over generations.
 
 ### **Key Features**
@@ -43,7 +43,7 @@ pip install pygame neat-python
 
 ---
 
-## 🔍 **How It Works**
+## **How It Works**
 1. **AI Training**
    - Two AI players start with random actions.
    - NEAT evaluates their performance using a **fitness function**.
@@ -60,7 +60,7 @@ pip install pygame neat-python
 
 ---
 
-## 🚀 **Running the Project**
+## **Running the Project**
 To start the **training process**, run:
 
 ```sh
@@ -72,7 +72,7 @@ You’ll be asked to **train** or **play against AI**:
 Enter 'train' to train a new AI or 'play' to play against the best AI: 
 ```
 
-### **🧠 Train the AI**
+### **Train the AI**
 ```sh
 python main.py
 # Then enter:
@@ -81,7 +81,7 @@ train
 - This runs **NEAT training**, evolving the AI over generations.
 - The best AI is saved to **`best.pickle`**.
 
-### **🎮 Play Against AI**
+### **Play Against AI**
 ```sh
 python main.py
 # Then enter:
@@ -92,7 +92,7 @@ play
 
 ---
 
-## 📁 **Project Structure**
+## **Project Structure**
 ```
 Pong-AI/
 │── pong.py                # Pong game logic
@@ -105,7 +105,7 @@ Pong-AI/
 
 ---
 
-## ⚙️ **Configuration**
+## **Configuration**
 You can tweak the **training settings** in `config.txt`. Some key parameters:
 
 ```ini
@@ -117,7 +117,7 @@ fitness_threshold   = 100  # AI stops training when reaching this fitness
 
 ---
 
-## 🏆 **Training the AI**
+## **Training the AI**
 1. **Start training**:
    ```sh
    python main.py
@@ -134,7 +134,7 @@ fitness_threshold   = 100  # AI stops training when reaching this fitness
 
 ---
 
-## 🎮 **Playing Against the AI**
+## **Playing Against the AI**
 Once trained, you can play against the AI:
 ```sh
 python main.py
@@ -146,46 +146,9 @@ python main.py
 
 ---
 
-## ⚠️ **Known Issues & Troubleshooting**
+## **Known Issues & Troubleshooting**
 | Issue | Possible Cause | Solution |
 |--------|-----------------|-------------|
 | **Game does not start** | Missing `pygame` | Run `pip install pygame` |
 | **403 Git Permission Error** | No write access | Fork the repo & push to your fork |
 | **NEAT training is slow** | Large population size | Reduce `pop_size` in `config.txt` |
-
----
-
-## 🤝 **Contributing**
-Want to improve the AI? Contributions are welcome!
-
-1. **Fork the repository**
-2. **Create a new branch**:
-   ```sh
-   git checkout -b feature-branch
-   ```
-3. **Commit & Push**:
-   ```sh
-   git add .
-   git commit -m "Added new feature"
-   git push origin feature-branch
-   ```
-4. **Open a Pull Request** 🚀
-
----
-
-## 🎯 **Final Thoughts**
-This project **demonstrates how AI can learn to play games** using evolution-based training. I hope you **enjoy experimenting with NEAT and Pong AI!** 🚀
-
-If you find this useful, **leave a ⭐ star** on the repo! 😊
-
----
-
-### **✅ Next Steps**
-1. **Copy & Paste This into `README.md`**
-2. **Commit & Push to GitHub**
-   ```sh
-   git add README.md
-   git commit -m "Added documentation for Pong AI"
-   git push origin main
-   ```
-3. **Done! Your repository now has full documentation!** 🎉
