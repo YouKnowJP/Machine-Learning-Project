@@ -6,10 +6,10 @@ import time
 import pickle
 
 # -------------------- Constants -------------------- #
-FPS = 60
+FPS = 720
 WIDTH, HEIGHT = 700, 500
 MAX_HITS = 50
-CHECKPOINT_FILE = "neat-checkpoint-50"
+CHECKPOINT_FILE = "neat-checkpoint-2"
 BEST_MODEL_FILE = "best.pickle"
 
 # -------------------- PongGame Class -------------------- #

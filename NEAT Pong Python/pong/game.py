@@ -2,8 +2,8 @@ from .paddle import Paddle
 from .ball import Ball
 import pygame
 from dataclasses import dataclass
-pygame.init()
 
+pygame.init()
 
 @dataclass
 class GameInformation:
@@ -13,14 +13,9 @@ class GameInformation:
     left_score: int
     right_score: int
 
-
 class Game:
     """
     Manages the state, drawing, and updates of the Pong game.
-
-    Use by initializing an instance and calling its loop() method inside your
-    pygame event loop. You can also call draw() and move_paddle() as needed.
-    Use the GameInformation returned from loop() to monitor game progress.
     """
     SCORE_FONT = pygame.font.SysFont("comicsans", 50)
     WHITE = (255, 255, 255)
@@ -32,16 +27,13 @@ class Game:
         self.window_height = window_height
         self.window = window
 
-        # Initialize paddles at their respective positions
         self.left_paddle = Paddle(10, self.window_height // 2 - Paddle.HEIGHT // 2)
         self.right_paddle = Paddle(
             self.window_width - 10 - Paddle.WIDTH,
             self.window_height // 2 - Paddle.HEIGHT // 2
         )
-        # Initialize the ball at the center of the window
         self.ball = Ball(self.window_width // 2, self.window_height // 2)
 
-        # Initialize scores and hit counts
         self.left_score = 0
         self.right_score = 0
         self.left_hits = 0
@@ -73,75 +65,82 @@ class Game:
         divider_width = 10
         divider_height = self.window_height // 20
         divider_x = self.window_width // 2 - divider_width // 2
-        # Draw alternating segments along the vertical axis
         for i in range(10, self.window_height, divider_height):
             if (i // divider_height) % 2 == 0:
                 pygame.draw.rect(
                     self.window, self.WHITE, (divider_x, i, divider_width, divider_height)
                 )
 
+    def _reflect_ball(self, ball: Ball, paddle: Paddle) -> None:
+        """
+        Handles the reflection of the ball when it collides with a paddle.
+        """
+        ball.x_vel *= -1
+        # Calculate reflection based on where the ball hit the paddle
+        middle_y = paddle.y + Paddle.HEIGHT / 2
+        difference_in_y = middle_y - ball.y
+        reduction_factor = (Paddle.HEIGHT / 2) / ball.MAX_VEL
+        ball.y_vel = -difference_in_y / reduction_factor
+
+    def _check_paddle_collision(self, paddle: Paddle, is_left: bool) -> None:
+        """
+        Checks if the ball collides with the given paddle. If so, reflect the ball
+        and increment the appropriate hit counter.
+        """
+        ball = self.ball
+
+        # If the ball is moving away from this paddle, no need to check
+        if is_left and ball.x_vel >= 0:
+            return
+        if not is_left and ball.x_vel <= 0:
+            return
+
+        # Check if ball is vertically within paddle range
+        if paddle.y <= ball.y <= paddle.y + Paddle.HEIGHT:
+            if is_left:
+                # Check left paddle collision
+                if ball.x - ball.RADIUS <= paddle.x + Paddle.WIDTH:
+                    self._reflect_ball(ball, paddle)
+                    self.left_hits += 1
+            else:
+                # Check right paddle collision
+                if ball.x + ball.RADIUS >= paddle.x:
+                    self._reflect_ball(ball, paddle)
+                    self.right_hits += 1
+
     def _handle_collision(self) -> None:
         """
         Checks and handles collisions between the ball and the game boundaries or paddles.
-
-        Adjusts the ball's velocity accordingly and increments hit counters.
         """
         ball = self.ball
-        left_paddle = self.left_paddle
-        right_paddle = self.right_paddle
 
         # Handle collision with top and bottom walls
         if ball.y + ball.RADIUS >= self.window_height or ball.y - ball.RADIUS <= 0:
             ball.y_vel *= -1
 
-        # Check collision with left paddle
-        if ball.x_vel < 0:
-            if left_paddle.y <= ball.y <= left_paddle.y + Paddle.HEIGHT:
-                if ball.x - ball.RADIUS <= left_paddle.x + Paddle.WIDTH:
-                    ball.x_vel *= -1
-                    # Calculate reflection based on where the ball hit the paddle
-                    middle_y = left_paddle.y + Paddle.HEIGHT / 2
-                    difference_in_y = middle_y - ball.y
-                    reduction_factor = (Paddle.HEIGHT / 2) / ball.MAX_VEL
-                    ball.y_vel = -difference_in_y / reduction_factor
-                    self.left_hits += 1
-        # Check collision with right paddle
-        else:
-            if right_paddle.y <= ball.y <= right_paddle.y + Paddle.HEIGHT:
-                if ball.x + ball.RADIUS >= right_paddle.x:
-                    ball.x_vel *= -1
-                    middle_y = right_paddle.y + Paddle.HEIGHT / 2
-                    difference_in_y = middle_y - ball.y
-                    reduction_factor = (Paddle.HEIGHT / 2) / ball.MAX_VEL
-                    ball.y_vel = -difference_in_y / reduction_factor
-                    self.right_hits += 1
+        # Handle collision with each paddle
+        self._check_paddle_collision(self.left_paddle, is_left=True)
+        self._check_paddle_collision(self.right_paddle, is_left=False)
 
     def draw(self, draw_score: bool = True, draw_hits: bool = False) -> None:
         """
         Clears and redraws the game window.
-
-        :param draw_score: If True, the current score will be rendered.
-        :param draw_hits: If True, the total hit count will be rendered.
         """
         self.window.fill(self.BLACK)
         self._draw_divider()
+
         if draw_score:
             self._draw_score()
         if draw_hits:
             self._draw_hits()
 
-        # Draw paddles and ball
         self.left_paddle.draw(self.window)
         self.right_paddle.draw(self.window)
         self.ball.draw(self.window)
 
     def move_paddle(self, left: bool = True, up: bool = True) -> bool:
         """
-        Moves the specified paddle up or down, while ensuring it remains within the screen.
-
-        :param left: True to move the left paddle; False for the right paddle.
-        :param up: True to move upward; False to move downward.
-        :return: True if the move is valid; False if the paddle would move off screen.
+        Moves the specified paddle up or down, ensuring it remains within the screen.
         """
         if left:
             if up and self.left_paddle.y - Paddle.VEL < 0:
@@ -159,10 +158,8 @@ class Game:
 
     def loop(self) -> GameInformation:
         """
-        Executes a single iteration of the game loop:
-        moves the ball, handles collisions, and updates scores.
-
-        :return: A GameInformation object with current hit and score statistics.
+        Executes a single iteration of the game loop: moves the ball, handles collisions,
+        and updates scores.
         """
         self.ball.move()
         self._handle_collision()
@@ -183,7 +180,9 @@ class Game:
         )
 
     def reset(self) -> None:
-        """Resets the game state, including the ball, paddles, scores, and hit counts."""
+        """
+        Resets the game state, including the ball, paddles, scores, and hit counts.
+        """
         self.ball.reset()
         self.left_paddle.reset()
         self.right_paddle.reset()
