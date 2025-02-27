@@ -29,12 +29,19 @@ class QNetwork(nn.Module):
         self.fc3 = nn.Linear(8, num_actions)
 
     def forward(self, x):
-        x = x.permute(0, 3, 1, 2)  # (N, H, W, C) -> (N, C, H, W)
-        x = self.features(x)
-        x = x.view(x.size(0), -1)
+        x = x.permute(0, 3, 1, 2)  # Convert (N, H, W, C) -> (N, C, H, W) for PyTorch
+        x = self.features(x)  # Apply convolutional layers
+
+        # Flatten dynamically based on actual feature map size
+        x = x.reshape(x.size(0), -1)  # or use x = x.reshape(x.size(0), -1)
+
+        # If `fc1` was hardcoded to 384 but `x` is different, redefine `fc1`
+        if not hasattr(self, "fc1") or self.fc1.in_features != x.shape[1]:
+            self.fc1 = nn.Linear(x.shape[1], 64).to(x.device)  # Ensure it's on the correct device
+
         x = nn.ReLU()(self.fc1(x))
         x = nn.ReLU()(self.fc2(x))
-        x = self.fc3(x)
+        x = self.fc3(x)  # Final output layer
         return x
 
 
@@ -50,16 +57,12 @@ class Agent:
     ):
         self.model = QNetwork(num_channels=input_shape[2], num_actions=3)
 
-        # Check if pretrained weights file exists
+        # Load pre-trained weight if available
         if os.path.isfile(config.PRETRAINED_WEIGHTS):
-            # If it's a TensorFlow/Keras file, you'd need a different approach to load it in PyTorch.
-            # If it's a PyTorch .pt or .pth file, do something like:
-            # self.model.load_state_dict(torch.load(config.PRETRAINED_WEIGHTS))
-            # For demonstration, we'll just print:
-            print(f"Found pretrained weights: {config.PRETRAINED_WEIGHTS}")
-            print("Loading is not implemented in PyTorch code if it's .h5!")
+            self.model.load_state_dict(torch.load(config.PRETRAINED_WEIGHTS))
+            print(f"Loaded PyTorch model weights from {config.PRETRAINED_WEIGHTS}")
         else:
-            print("No pretrained weights found. Training from scratch.")
+            print("No pretrained weights found, starting from scratch.")
 
         # Replay buffer
         self.memory = deque(maxlen=memory_size)

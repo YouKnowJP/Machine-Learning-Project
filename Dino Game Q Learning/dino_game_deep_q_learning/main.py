@@ -1,5 +1,6 @@
 # main.py
 
+import torch
 import time
 from tqdm import tqdm
 import matplotlib.pyplot as plt
@@ -54,7 +55,7 @@ def main():
             agent.learn()
 
             if episode % 20 == 0:
-                agent.model.save_weights(config.PRETRAINED_WEIGHTS)
+                torch.save(agent.model.state_dict(), config.PRETRAINED_WEIGHTS)
                 print("Saved model weights to", config.PRETRAINED_WEIGHTS)
 
     except KeyboardInterrupt:
