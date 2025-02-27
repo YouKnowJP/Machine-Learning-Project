@@ -1,4 +1,4 @@
-# **Deep Q-Learning + A* Snake Game**  
+# **Deep Q-Learning + A* Snake Game**
 
 This project implements a hybrid Deep Q-Learning and A* pathfinding agent that learns to play the classic Snake Game using reinforcement learning techniques. The agent is built with PyTorch and leverages experience replay, an epsilon-greedy policy, and a simple two-layer neural network to approximate Q-values. Additionally, the A* search algorithm is integrated to compute optimal paths when appropriate, enhancing decision-making.  
 
