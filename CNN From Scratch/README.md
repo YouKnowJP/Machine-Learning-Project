@@ -18,7 +18,6 @@ CNN-From-Scratch/
 │── digit-recognizer/
 │   ├── train.csv             # Training dataset from Kaggle
 │   ├── test.csv              # Test dataset from Kaggle
-│── requirements.txt          # Dependencies
 │── README.md                 # Project documentation
 ```
 
