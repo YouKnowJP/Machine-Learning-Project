@@ -54,5 +54,3 @@ Beyond Pong, NEAT is widely used for:
 
 For more details, check out the original **NEAT paper** by Kenneth Stanley:  
 📄 [NEAT: NeuroEvolution of Augmenting Topologies](http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf)  
-
-By applying NEAT to Pong, we allow an AI to **learn from experience** and develop an efficient strategy over time. 🚀
