@@ -11,7 +11,7 @@ MAX_GAMES: int = 200            # Total number of games to train
 MAX_MEMORY: int = 100_000       # Maximum size for the replay memory
 BATCH_SIZE: int = 1_000         # Batch size for training from replay memory
 LR: float = 0.001               # Learning rate
-GAMMA: float = 0.9              # Discount factor for Q-learning
+GAMMA: float = 0.99             # Discount factor for Q-learning
 
 # Exploration parameters
 INITIAL_EPSILON: float = 1.0    # Starting exploration rate
