@@ -3,13 +3,13 @@
 The root MIT license covers the owner's project code. It does not grant rights
 to third-party assets or replace licenses of separately installed dependencies.
 
-## Human Game / Switchback
+## Switchback
 
-The current component includes original JavaScript, HTML, CSS, SVG artwork, and
-a screenshot of its interface. It bundles no fonts, audio, external images,
-datasets, models, or third-party runtime packages. Its CSS font names refer to
-fonts already available on the player's device; font files are not distributed.
-Node.js is used to serve files and run tests. See `Human Game/LICENSE`.
+Switchback is now maintained in
+[Personal-Project](https://github.com/YouKnowJP/Personal-Project). Its earlier
+source commits and releases remain in this repository's history. See the new
+repository's [asset notice](https://github.com/YouKnowJP/Personal-Project/blob/main/THIRD_PARTY_NOTICES.md)
+for the current game distribution.
 
 ## Removed Arial font in the older Snake project
 
