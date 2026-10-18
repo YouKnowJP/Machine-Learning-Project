@@ -1,12 +1,8 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
 .DS_Store
-node_modules/
-.switchback-build-*/
 .env.*
 !.env.example
-.playwright-mcp/
-test-results/
 __pycache__/
 *.py[cod]
 *$py.class

@@ -1,19 +1,5 @@
 # Machine Learning Project
 
-## Switchback has moved
-
-Switchback, the browser Snake game previously developed in `Human Game`, is now
-maintained in [Personal-Project](https://github.com/YouKnowJP/Personal-Project).
-
-[Game source and setup](https://github.com/YouKnowJP/Personal-Project/tree/main/Human%20Game) ·
-[Downloads](https://github.com/YouKnowJP/Personal-Project/releases/latest) ·
-[Roadmap](https://github.com/YouKnowJP/Personal-Project/blob/main/Human%20Game/ROADMAP.md)
-
-Earlier commits and releases remain here as historical versions. Current game
-development and releases continue in the new repository.
-
-## Machine-learning collection
-
 Welcome to my **Machine Learning Project repository**! This repo contains all my AI and machine learning projects, covering a wide range of topics including:
 
 - **Deep Learning** (CNNs, RNNs, Transformers)
