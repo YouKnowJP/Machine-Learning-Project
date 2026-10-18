@@ -68,3 +68,26 @@ or the organizers' independent scan. No history was rewritten.
   relicensed or certified by creating this component.
 - No deployment, external user base, organizer clearance, or onboarding is claimed.
 - Campaign, level editor, replays, and offline installation remain on the roadmap.
+
+## Submission correction verification — 2026-10-17
+
+- Removed the older Snake project's bundled Arial file from the current tree.
+  The renderer selects `pygame.font.Font(None, 25)` instead of a repository font.
+- With an isolated Python 3.12.13 / Pygame 2.6.1 environment and dummy SDL drivers,
+  imported that renderer, rendered score text, created a 640×480 game, and executed
+  one non-terminal frame successfully. No model training or inference was run.
+- Legacy Python syntax check passed. No `.ttf` file remains in the working tree.
+- Switchback `npm run check` and all 29 Node tests passed again after the changes.
+- Fresh Gitleaks history and entire working-directory scans reported no leaks.
+  The pre-correction-commit history scan reported 42 scanned commits and 128.80 MB;
+  the working-directory scan covered approximately 250.23 KB. Reports are redacted.
+- Inspected all four CSV objects found in fetched Git history. Each row matched
+  its digit-recognition schema: 42,000 training rows with labels 0–9 and 784
+  integer pixels 0–255; 28,000 test rows with 784 integer pixels; and two 28,000-row
+  prediction files with sequential image IDs and labels 0–9. No unexpected columns
+  or nonnumeric cells were found. This verifies those schemas, not all provenance
+  or every possible privacy/rights question in repository history.
+- Historical Arial copies remain. See `THIRD_PARTY_NOTICES.md` at repository root
+  and `ELIGIBILITY.md`; current-tree removal does not grant historical rights.
+- Owner confirmed entirely personal work and 20+ hours of development regardless
+  of acceptance. No organizer scope or history-remediation decision has been received.

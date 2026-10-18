@@ -14,10 +14,8 @@ from typing import Optional, Tuple, List
 import config
 
 pygame.init()
-try:
-    font = pygame.font.Font('arial.ttf', 25)
-except Exception:
-    font = pygame.font.SysFont('arial', 25)
+# Use the font supplied by the installed Pygame package; no font file is bundled.
+font = pygame.font.Font(None, 25)
 
 class Direction(Enum):
     RIGHT = 1

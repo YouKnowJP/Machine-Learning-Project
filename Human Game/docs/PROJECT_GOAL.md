@@ -23,8 +23,12 @@ reviewable CC-CLI v2 submission; onboarding remains the program's decision.
       independent of employers, clients, universities, company ownership, and
       confidentiality restrictions. This records the owner's confirmation; it
       does not replace the program's certification.
-- [ ] Owner confirms which unfinished tasks they actually planned to do anyway,
-      with at least 20 hours remaining at submission time.
+- [x] Owner confirmed on 2026-10-17 an intent to continue Switchback for at least
+      20 hours even if CC-CLI v2 does not accept it, and delegated feature selection.
+      The selected unfinished roadmap is estimated at 30–42 hours.
+- [x] Removed the restricted bundled Arial file from the current repository tree
+      and changed the older renderer to the installed Pygame default font.
+- [ ] Organizers accept the documented handling of historical Arial copies.
 - [ ] Repository and its complete submitted history pass the organizers' secrets
       and personal-data checks; local scans cannot guarantee this result.
 - [ ] Submit the repository's main URL and accurately explain the component scope.
@@ -34,3 +38,4 @@ reviewable CC-CLI v2 submission; onboarding remains the program's decision.
 The first implementation was AI-assisted. Do not backdate commits, invent usage,
 claim proposed work is completed, or certify facts that the repository cannot show.
 Use the [submission notes](SUBMISSION.md) to resolve uncertainties with organizers.
+See [ELIGIBILITY.md](ELIGIBILITY.md) for the current evidence and unresolved items.

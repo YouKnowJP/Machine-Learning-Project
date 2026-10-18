@@ -101,17 +101,23 @@ Version **0.1.0** is a playable foundation, created with AI coding assistance in
 existing repository. It does not establish a long history of human maintenance,
 users, a deployment, or program eligibility. The [roadmap](ROADMAP.md) describes
 substantial unfinished game work; its estimates are planning estimates, not hours
-already worked or a certification that the owner planned them independently.
+already worked. On 2026-10-17, the owner confirmed an intent to continue Switchback
+for at least 20 hours regardless of program acceptance and delegated selection
+of the next features.
 
 CC-CLI v2 applicants should read [submission notes](docs/SUBMISSION.md). The
 organizers must confirm whether they accept this gameplay-only component within
 a repository that also contains excluded ML projects.
+The [eligibility checklist](docs/ELIGIBILITY.md) records what has been verified
+and what still needs an organizer decision.
 
 ## License and contributions
 
-MIT, under the repository's [LICENSE](../LICENSE). A matching copy is included in
-this directory. New artwork and game source were created for this component; it
+MIT. The included [LICENSE](LICENSE) matches the repository's top-level license.
+New artwork and game source were created for this component; it
 does not bundle third-party fonts, audio, datasets, or images.
+See the repository's [third-party notice](../THIRD_PARTY_NOTICES.md) for the older
+Snake font removal and remaining historical asset considerations.
 
 For a contribution, describe a reproducible gameplay issue or choose a roadmap
 item, preserve repository history, and include focused regression coverage for

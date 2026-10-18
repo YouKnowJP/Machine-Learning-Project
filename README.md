@@ -17,6 +17,12 @@ Open the printed localhost URL. Node.js 22+ is required; no package installation
 is needed. See the [remaining gameplay roadmap](Human%20Game/ROADMAP.md) and
 [project submission notes](Human%20Game/docs/SUBMISSION.md).
 
+For CC-CLI v2, the proposed work is limited to `Human Game` and its human-played
+gameplay roadmap. The model-related projects elsewhere in this repository are
+outside that scope. Organizer acceptance of this mixed repository and the new
+component's history is still pending. See the [eligibility checklist](Human%20Game/docs/ELIGIBILITY.md)
+and [third-party asset notice](THIRD_PARTY_NOTICES.md).
+
 ## Machine-learning collection
 
 Welcome to my **Machine Learning Project repository**! This repo contains all my AI and machine learning projects, covering a wide range of topics including:

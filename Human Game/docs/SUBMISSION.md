@@ -17,12 +17,17 @@ material, not an approval or legal/ownership certification.
 >
 > I would propose only further gameplay development: authored campaign stages,
 > a local level editor, human-input replays, configurable controls, and offline
-> installation. The repository includes a proposed 30–42 hour unfinished backlog;
-> I will confirm my intended scope and remaining hours before applying.
+> installation. I intend to continue this game for at least 20 hours regardless
+> of program acceptance; the selected unfinished backlog is estimated at 30–42 hours.
 >
 > Can that gameplay-only component qualify within this existing ML repository?
 > It is a newly created AI-assisted component, so I am also asking whether its
 > current development history meets your project-maturity expectations.
+>
+> I also removed a restricted Arial font from the current tree of the older Snake
+> project and changed that renderer to use Pygame's default font. Historical
+> commits still contain the old font. Before changing history, I would like your
+> guidance on whether additional remediation is necessary for this submission.
 >
 > Repository: https://github.com/YouKnowJP/Machine-Learning-Project
 
@@ -56,8 +61,9 @@ GitHub account ownership and a license notice do not establish that the work was
 independent of school, clients, employers, company ownership, or confidential work.
 
 **Remaining hours:** Select genuine unfinished work from [ROADMAP.md](../ROADMAP.md)
-and update the estimates. Do not count the completed starter implementation toward
-the program's requirement for 20 hours of future work.
+and update the estimates as work progresses. On 2026-10-17, the owner explicitly
+confirmed an intent to do 20+ hours regardless of acceptance. Do not count the
+completed starter implementation toward the program's future-work requirement.
 
 **Anything else:** Disclose the ML components elsewhere in this repository, link
 the roadmap, mention the new AI-assisted game component, and cite any organizer
@@ -67,6 +73,8 @@ history, clearance, or scan results that have not been verified.
 ## Before sending the form
 
 - Confirm organizer acceptance of the mixed-repository and new-component scope.
+- Obtain organizer guidance on the historical Arial font copies; current-tree
+  removal has been completed, and no redistribution permission is claimed.
 - Ensure the reviewed game files are present on the repository's main branch.
 - Confirm your ownership, resource independence, NDA/company status, and intent
   to complete at least 20 hours of unfinished work.
@@ -77,3 +85,5 @@ history, clearance, or scan results that have not been verified.
 - Keep the root MIT LICENSE, working setup instructions, tests, and visible plans.
 - Submit accurate information in Labelbox, then wait for clearance and contributor
   terms/setup instructions. This source change itself does not onboard you.
+
+See [ELIGIBILITY.md](ELIGIBILITY.md) for the requirement-by-requirement record.

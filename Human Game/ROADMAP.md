@@ -3,9 +3,11 @@
 This is the selected **30–42 hour** next-phase backlog for a human-played game.
 On 2026-10-17, the owner delegated feature selection to the coding assistant;
 the milestones below prioritize interesting gameplay and practical game tools.
-None is implemented in the starter release. Before applying, the owner must
-confirm that this is work they intend to do regardless of program participation.
-Re-estimate after discovery; do not claim these estimates as time already worked.
+None is implemented in the starter release. On 2026-10-17, the owner explicitly
+confirmed an intent to continue Switchback for at least 20 hours even if CC-CLI v2
+does not accept it. This is an owner statement, not an organizer decision.
+Re-estimate after discovery and keep at least 20 hours of genuine unfinished work
+at submission; do not claim estimates as time already worked.
 
 | Priority | Deliverable | Estimate | Acceptance criteria |
 | --- | --- | --- | --- |
