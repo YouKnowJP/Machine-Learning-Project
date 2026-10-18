@@ -1,20 +1,19 @@
-# Work remaining after v0.2.0
+# Switchback roadmap
 
-The owner delegated feature decisions and confirmed an intent to continue
-Switchback for at least 20 hours regardless of CC-CLI v2 acceptance. The selected
-next phase is estimated at **24–34 hours**. These estimates describe unfinished
-work, not time already worked or a program approval. Re-estimate as work progresses.
+The next phase focuses on creative tools, replayable challenges, and more ways
+to play. Estimates are planning ranges for unfinished work and will change as
+the features are tested. Completed v0.2 features are listed separately below.
 
 | Priority | Deliverable | Estimate | Acceptance criteria |
 | --- | --- | --- | --- |
 | 1 | Local level editor and validation | 6–8 h | Place walls, gates, starts, and energy targets; undo/redo; preview a stage; import/export versioned JSON. Reject malformed, overlapping, out-of-bounds, and oversized input. Keep the authored campaign intact. |
-| 2 | Human-run replay recorder and viewer | 6–8 h | Record tick-indexed turns/shifts, stage or seed, and engine version. Export/import bounded JSON; pause and change playback speed; reproduce results exactly and reject incompatible versions. No learned player or model evaluation. |
-| 3 | Configurable input and accessibility | 4–6 h | Remap controls, add left/right-handed touch layouts and gamepad input/disconnect handling, and verify focus/live-region behavior with assistive technology. Basic touch, swipe, symbols, and high contrast already exist and are excluded. |
-| 4 | Offline installation and update handling | 4–6 h | Add install metadata and a versioned offline cache; handle interrupted upgrades and stale saves; test on actual phones/tablets and desktop browsers. The static build is already complete and is excluded. |
-| 5 | Bonus-stage mechanics and campaign balancing | 4–6 h | Add switch-activated gates and limited-shift objectives, at least three bonus stages, rule tests, and calibrated medal targets from the owner's playtests. Existing six stages, lessons, sound, and medals are excluded. |
-| | **Total unfinished work** | **24–34 h** | Show completion through code, behavior checks, and release notes. |
+| 2 | Replay recorder and viewer | 6–8 h | Record tick-indexed turns/shifts, stage or seed, and engine version. Export/import bounded JSON; pause and change playback speed; reproduce results exactly and reject incompatible versions. |
+| 3 | Configurable input and accessibility | 4–6 h | Remap controls, add left/right-handed touch layouts and gamepad input/disconnect handling, and verify focus/live-region behavior with assistive technology. Build on existing touch, swipe, symbols, and high contrast. |
+| 4 | Offline installation and update handling | 4–6 h | Add install metadata and a versioned offline cache; handle interrupted upgrades and stale saves; test on actual phones/tablets and desktop browsers. Build on the existing static release. |
+| 5 | Bonus-stage mechanics and campaign balancing | 4–6 h | Add switch-activated gates and limited-shift objectives, at least three bonus stages, rule tests, and calibrated medal targets from playtests. |
+| | **Total estimated work** | **24–34 h** | Verify each feature through working behavior, focused tests, and release notes. |
 
-## Already delivered; excluded from the estimate
+## Available now
 
 - Six authored stages with distinct layouts and verified completion routes.
 - Guided First Light lessons, stage unlocks, saved progress, and route medals.
@@ -23,11 +22,10 @@ work, not time already worked or a program approval. Re-estimate as work progres
   original synthesized sound.
 - Backward-compatible saves and separate recent-history/campaign reset controls.
 - Dependency-free development server, public-asset build, 42 tests, CI, and release docs.
-- Setup, architecture, ownership/eligibility evidence, and submission draft.
 
-## Boundaries
+## Design principles
 
-This is a human-played game. The future work includes no model development,
-training, evaluation, inference, ML infrastructure, or data creation for those uses.
-Replay tools reproduce human input for practice and debugging. No personal or
-customer data is needed. Program acceptance remains the organizers' decision.
+Keep the game playable locally without accounts or external services. Replay
+tools should help players practice routes and reproduce bugs. Custom stages and
+replays should use bounded, validated files. Preserve existing saves, campaign
+progress, and the small static distribution as new features arrive.

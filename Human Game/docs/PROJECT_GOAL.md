@@ -1,43 +1,34 @@
-# Project goal: a maintainable human-played arcade game
+# Project goals
 
-Build Switchback into a small, polished Snake game that the owner wants to keep
-developing. Provide an independent non-ML component in `Human Game` while keeping
-the repository's existing history and ML projects intact. Prepare an accurate,
-reviewable CC-CLI v2 submission; onboarding remains the program's decision.
+Switchback turns Snake into a short routing challenge: switch phases, time a
+gate crossing, and find a better path through a circuit. The goal is a polished
+single-player game that is easy to start and rewarding to replay.
 
-## Technical acceptance
+## Player experience
 
-- [x] A working human-controlled game with a distinctive two-phase mechanic.
-- [x] A simple documented launch path without accounts, tokens, or model services.
-- [x] Six-stage campaign, guided lessons, unlocks, medals, and saved progress.
-- [x] Classic, endless, daily seeds, local records, pause/retry, and touch/swipe input.
-- [x] Optional original sound, backward-compatible saves, and static release packaging.
-- [x] MIT license, useful README, focused tests, and a CI workflow.
-- [x] Explicit future work with estimates separate from completed starter work.
-- [ ] Full cross-browser and actual touch-device verification.
-- [ ] Complete the chosen roadmap items with tests and release notes.
+- Teach movement, phase switching, and gates through play.
+- Offer a clear progression from the first lesson to six distinct campaign stages.
+- Reward efficient routes with medals while allowing unlimited retries.
+- Provide quick arcade sessions through Phase run, Classic, and Daily circuit.
+- Support keyboard and touch input, readable symbols, high contrast, and optional sound.
 
-## Submission acceptance: unresolved until confirmed
+## Engineering goals
 
-- [ ] Organizers confirm that a gameplay-only component inside this ML repository
-      is acceptable. A new directory by itself does not settle eligibility.
-- [x] Owner reported on 2026-10-17 that the repository is entirely personal work,
-      independent of employers, clients, universities, company ownership, and
-      confidentiality restrictions. This records the owner's confirmation; it
-      does not replace the program's certification.
-- [x] Owner confirmed on 2026-10-17 an intent to continue Switchback for at least
-      20 hours even if CC-CLI v2 does not accept it, and delegated feature selection.
-      The selected unfinished roadmap is estimated at 24–34 hours.
-- [x] Removed the restricted bundled Arial file from the current repository tree
-      and changed the older renderer to the installed Pygame default font.
-- [ ] Organizers accept the documented handling of historical Arial copies.
-- [ ] Repository and its complete submitted history pass the organizers' secrets
-      and personal-data checks; local scans cannot guarantee this result.
-- [ ] Submit the repository's main URL and accurately explain the component scope.
-- [ ] Receive clearance, sign the contributor terms/certification, and receive
-      setup instructions before claiming to have onboarded.
+- Keep the browser game independent of the repository's other projects.
+- Run locally or on a static host without accounts or a backend.
+- Keep movement and scoring deterministic for repeatable rule tests and replays.
+- Validate saves and retain older scores as the game evolves.
+- Ship only public game assets and the MIT license in downloadable packages.
+- Document controls, limitations, architecture, and release steps.
 
-The first implementation was AI-assisted. Do not backdate commits, invent usage,
-claim proposed work is completed, or certify facts that the repository cannot show.
-Use the [submission notes](SUBMISSION.md) to resolve uncertainties with organizers.
-See [ELIGIBILITY.md](ELIGIBILITY.md) for the current evidence and unresolved items.
+## Development status
+
+The six-stage campaign, lessons, unlocks, medals, arcade modes, local saves,
+swipe controls, synthesized sound, and static packaging are available now.
+
+Next milestones are a level editor, replay tools, configurable controls and
+gamepad support, offline installation, and bonus stages. See the
+[roadmap](../ROADMAP.md) for estimates and completion criteria.
+
+Full Firefox/Safari, actual touch-device, and assistive-technology verification
+remain open. See the [QA record](QA.md) for tested behavior and current limits.

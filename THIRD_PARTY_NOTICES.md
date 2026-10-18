@@ -26,8 +26,6 @@ claimed here.
 
 Historical Git commits still contain that font. This change preserves the
 repository's actual history and does not retroactively license historical copies.
-Any removal from history or other remediation must be agreed with the program
-organizers before claiming this issue is fully resolved for submission.
 
 - [Microsoft font redistribution guidance](https://learn.microsoft.com/en-us/typography/fonts/font-faq)
 - [Pygame default font documentation](https://www.pygame.org/docs/ref/font.html)
@@ -35,7 +33,5 @@ organizers before claiming this issue is fully resolved for submission.
 ## Existing machine-learning projects
 
 The other directories use separately installed packages, with their own licenses.
-They and historical data/model artifacts remain outside the proposed Switchback
-work scope. Their presence is disclosed; they are not made eligible for CC-CLI v2
-by the creation of `Human Game`. This notice is not a certification of all
-historical third-party asset rights.
+Their data and model artifacts are separate from Switchback and are not bundled
+in its static release. Consult each dependency's license before redistribution.

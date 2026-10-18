@@ -119,7 +119,7 @@ See [QA notes](docs/QA.md) for browser coverage and limits.
 
 The build writes only public game assets and the MIT license into `dist/`.
 Serve that directory with a static host or an HTTP server. It contains no legacy
-ML files, developer server, submission documents, or tests. No hosting account or
+ML files, developer server, development documentation, or tests. No hosting account or
 deployment is required to play locally. The build refuses to overwrite an
 unrelated nonempty directory. See [release instructions](docs/RELEASING.md).
 
@@ -133,20 +133,17 @@ scripts/build.mjs   Static release packaging
 tests/              Rules, persistence, campaign routes, and build verification
 ```
 
-## Ownership, license, and project status
+## License and development
 
 MIT; see the included [LICENSE](LICENSE), matching the repository's root license.
-The owner confirmed personal ownership and delegated feature decisions. The
-project was built with AI coding assistance in the existing repository, preserving
-its history. New source and interface artwork were created for this game.
+Switchback is a personal project developed with AI coding assistance. Its source,
+interface artwork, and synthesized sound were created for this game.
 
-Version **0.2.0** is a playable campaign and arcade release. A level editor, human
-replay tools, configurable controls/gamepad support, offline installation, and
-campaign expansion remain on the [24–34 hour roadmap](ROADMAP.md). Completed work
-is excluded from that estimate. The owner confirmed an intent to continue for at
-least 20 hours regardless of CC-CLI v2 acceptance.
+Version **0.2.1** includes the six-stage campaign and three arcade modes.
+Download the [latest release](https://github.com/YouKnowJP/Machine-Learning-Project/releases/latest)
+or run from source. Next features include a level editor, replay tools,
+configurable controls/gamepad support, offline installation, and bonus stages;
+see the [roadmap](ROADMAP.md) and [project goals](docs/PROJECT_GOAL.md).
 
-The [submission notes](docs/SUBMISSION.md) and [eligibility evidence](docs/ELIGIBILITY.md)
-separate verified preparation from the program's review decision. Existing ML
-projects and historical assets elsewhere in this repository are disclosed in the
-root [third-party notice](../THIRD_PARTY_NOTICES.md).
+See the root [third-party notice](../THIRD_PARTY_NOTICES.md) for asset and
+dependency information about the wider repository.

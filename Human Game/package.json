@@ -1,6 +1,6 @@
 {
   "name": "switchback-human-game",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "A human-played, two-phase Snake arcade game. No models, services, or runtime dependencies.",

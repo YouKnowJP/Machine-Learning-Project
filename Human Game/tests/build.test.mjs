@@ -10,7 +10,9 @@ test('static release includes all modules and the license, and preserves no stal
   const destination = path.join(temporary, 'release');
   try {
     const result = await build(destination);
-    assert.equal(result.version, '0.2.0');
+    const { version } = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+    assert.equal(result.version, version);
+    assert.ok((await readFile(path.join(destination, 'index.html'), 'utf8')).includes(`v${version}`));
     for (const file of PUBLIC_FILES) assert.ok((await readFile(path.join(destination, file))).length);
     for (const file of PUBLIC_FILES.filter(file => file.endsWith('.mjs'))) {
       const source = await readFile(path.join(destination, file), 'utf8');
@@ -20,7 +22,7 @@ test('static release includes all modules and the license, and preserves no stal
       }
     }
     await assert.rejects(readFile(path.join(destination, 'serve.mjs')));
-    await assert.rejects(readFile(path.join(destination, 'docs/SUBMISSION.md')));
+    await assert.rejects(readFile(path.join(destination, 'docs/QA.md')));
     await writeFile(path.join(destination, 'stale-file.txt'), 'stale');
     await build(destination);
     assert.ok(!(await readdir(destination)).includes('stale-file.txt'));
