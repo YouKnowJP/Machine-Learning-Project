@@ -1,5 +1,24 @@
 # Machine Learning Project
 
+## Human Game: Switchback
+
+[Switchback](Human%20Game/README.md) is a human-played browser Snake game with
+two-phase gates, a classic mode, daily seeded routes, keyboard/touch controls,
+and local scores. It is an independent game component and has no model training,
+inference, or ML dependencies. The existing machine-learning projects remain below.
+
+```sh
+git clone https://github.com/YouKnowJP/Machine-Learning-Project.git
+cd 'Machine-Learning-Project/Human Game'
+npm start
+```
+
+Open the printed localhost URL. Node.js 22+ is required; no package installation
+is needed. See the [remaining gameplay roadmap](Human%20Game/ROADMAP.md) and
+[project submission notes](Human%20Game/docs/SUBMISSION.md).
+
+## Machine-learning collection
+
 Welcome to my **Machine Learning Project repository**! This repo contains all my AI and machine learning projects, covering a wide range of topics including:
 
 - **Deep Learning** (CNNs, RNNs, Transformers)
@@ -27,4 +46,4 @@ This repository is a collection of my AI and ML projects, demonstrating various 
    ```sh
    git clone https://github.com/YouKnowJP/Machine-Learning-Project.git
    cd Machine-Learning-Project
-   
+   ```
