@@ -1,17 +1,17 @@
 # Switchback
 
-**A familiar game. A different rhythm.**
+**Six circuits. Endless detours.**
 
-Switchback is a human-played Snake arcade game for people who enjoy short,
-repeatable skill challenges. In Phase run, switch between mint circles and amber
-diamonds to collect energy and pass matching gates. Classic removes gates and
-phase matching. Daily circuit uses a UTC date seed and a fixed starting pace.
+Switchback is a human-played Snake arcade game for short skill challenges.
+Switch between mint circles and amber diamonds to collect energy and pass
+matching gates. Learn the rules through a playable lesson, complete six authored
+stages, or chase a high score in three arcade modes.
 
-Built with vanilla JavaScript, Canvas 2D, HTML, and CSS. No model training,
-inference, automated player, ML libraries, backend, accounts, telemetry, external
-fonts, or paid services. All gameplay runs in the browser.
+Built with vanilla JavaScript, Canvas 2D, HTML, and CSS. There are no runtime
+packages, models, trained agents, backend accounts, telemetry, or external asset
+downloads. Gameplay, progress, and sound synthesis run in the browser.
 
-![Switchback gameplay showing mint and amber gates](docs/switchback.png)
+![Switchback campaign gameplay](docs/switchback.png)
 
 ## Run
 
@@ -22,104 +22,131 @@ cd 'Human Game'
 npm start
 ```
 
-Open **http://127.0.0.1:4173**. There are no packages to install and no build step.
-Press Ctrl+C in the terminal to stop the server. If the port is busy, run
-`PORT=4174 npm start` on macOS/Linux. On PowerShell, run `$env:PORT=4174; npm start`.
+Open **http://127.0.0.1:4173**. No package installation or build is needed.
+Stop the server with Ctrl+C. If the port is busy, run `PORT=4174 npm start` on
+macOS/Linux or `$env:PORT=4174; npm start` in PowerShell.
 
-Alternatively, run `python3 -m http.server 4173 --bind 127.0.0.1` from this
-directory. Serve over HTTP: opening `index.html` with `file://` does not reliably
-load JavaScript modules. The bundled server intentionally exposes only the game
-assets, not repository files.
+Alternatively, run `python3 -m http.server 4173 --bind 127.0.0.1` from this folder.
+Use an HTTP server: opening `index.html` through `file://` does not reliably load
+JavaScript modules. The bundled development server exposes only game assets.
 
-Use a current desktop Chrome, Edge, Firefox, or Safari browser. The responsive
-layout has touch buttons for phones and tablets; broad device verification is
-still on the roadmap. Fullscreen support depends on the browser.
+## Four ways to play
 
-## Play
+| Mode | Challenge |
+| --- | --- |
+| **Campaign** | Six ordered stages, fixed energy positions, unlocks, and saved route medals. First Light teaches the rules through three playable lessons. |
+| **Phase run** | An endless seeded arena. Match your head to energy and gates while leaving room for your tail. |
+| **Classic** | An open board with no phase requirements, gates, or solid blocks. |
+| **Daily circuit** | A UTC date seed and Standard pace. Unlimited local retries; a shared starting condition without an online leaderboard. |
+
+### Campaign
+
+| Stage | What changes | Energy target | Gold move target |
+| --- | --- | --- | --- |
+| First Light | Learn movement, switching, and a first gate | 3 | 14 |
+| Crosscurrent | Find openings through one divider | 4 | 48 |
+| Slalom | Weave through three offset lanes | 5 | 72 |
+| Double Lock | Switch between two opposing gate lines | 6 | 86 |
+| Orbit | Enter and escape two nested rings | 6 | 60 |
+| Afterglow | Connect all four sections of a final crossing | 7 | 94 |
+
+Collect every energy cell to complete a stage and unlock the next. Gold requires
+finishing within the listed move target, Silver within 1.5× that target, and
+Bronze rewards any completion. Medals use simulation moves, so pace and time spent
+paused do not affect the rating. Replaying a stage preserves your best medal and
+lowest move count. Any pace can unlock stages; these are local practice records.
+
+First Light uses a slower 220 ms tick. Before its first completion, the game
+pauses after the first two pickups so you can read and continue each lesson.
+Small numbered rings show later energy positions. The current energy remains
+visible even if your tail temporarily covers its cell.
+
+## Controls and rules
 
 | Action | Keyboard | Touch / pointer |
 | --- | --- | --- |
-| Start / retry | Tab to Start run, then Enter | Start run |
-| Turn | Arrow keys or WASD | On-screen arrows |
+| Start, continue, retry, next stage | Tab to the main button, then Enter | Main board button |
+| Turn | Arrow keys or WASD | On-screen arrows or swipe the board |
 | Switch mint / amber | Space | Shift phase |
 | Pause / resume | P or Escape | Pause / Keep going |
-| Reset to a new ready run | R | New run |
+| Reset current run | R | New run |
+| Sound / high contrast | Tab to the footer controls | Footer toggles |
 
-- Each matching energy pickup earns **100 points** and grows your snake by one.
-- Mint uses circles; amber uses diamonds, so hue is not the only cue.
-- Shift before **entering** a gate. Gate checks apply to the head; the body can
-  trail through it after a phase change. Solid blocks are never passable.
-- Unmatched energy stays on the board when you pass over it.
-- Touching a boundary, a solid block, your own body, or a wrong-phase gate ends
-  the run. Moving into a tail square that vacates on the same step is allowed.
-- Classic has no gates, blocks, or phase requirements. Boards do not wrap.
-- Pace rises gently every three pickups, with a minimum tick of 65 ms.
-- Switching tabs or windows pauses the game. Resume deliberately when you return.
-- Route settings are locked during a run; New run resets them for editing.
-- A full board completes the circuit without an endless food-placement loop.
+- Each matching energy pickup is **100 points** and grows the snake by one.
+- Match the **entering head** to the gate. Your body can trail through it after a
+  phase change. Solid blocks never allow passage.
+- Unmatched energy stays available when you pass over it. Classic skips matching.
+- Board edges, solid blocks, your body, or a wrong-phase gate end the run. The
+  board does not wrap; moving into a tail square that vacates on the same step is legal.
+- The pace gently increases every three pickups, except during First Light.
+- Switching tabs/windows pauses play. Resume deliberately when you return.
+- Sound starts **off**. Optional effects are original synthesized tones with no
+  downloaded audio files. A sound failure does not prevent play.
+- Route, stage, and pace settings are locked during a live or paused run. Reset
+  the run to change them.
 
-## Seeds and records
+## Saved progress and privacy
 
-The same seed, mode, pace, and sequence of inputs produce the same game. Seeds
-affect initial gate phase and food placement. Daily circuit uses a UTC date seed,
-including the date displayed in its seed field. It is a shared starting condition,
-not a guarantee that different player routes will generate the same later food.
-Daily runs can be retried without limits; there is no online competition.
+The browser saves campaign progress, medals, per-mode/pace bests, settings, and
+the last five completed runs in `localStorage`. Daily bests are separated by date;
+campaign bests are also separated by stage. Upgrading from v0.1 retains existing
+arcade scores and settings.
 
-Best scores are separated by mode and pace, and daily bests are also separated by
-date. The last five completed runs are stored locally in your browser. There are
-no player names, logins, cookies, or network score submissions. Clearing records
-removes the game's stored data. If browser storage is blocked, scores remain
-available only for that visit and the UI reports the limitation.
+**Clear history** clears recent runs while preserving bests, settings, and campaign
+progress. **Reset** in the campaign panel asks before removing campaign unlocks,
+medals, and campaign best scores. Clearing browser site data removes everything.
+If storage is blocked, the game keeps results for the current visit and reports
+that they could not be saved.
 
-## Development and verification
+There are no names, logins, cookies, telemetry, uploads, remote APIs, or online
+score submissions. Local records can be edited by the browser owner; they are not
+a trusted competition system. Campaign energy positions are authored. Arcade
+seeds repeat only for the same mode, pace, engine version, and inputs; later food
+can differ when players take different routes.
+
+## Check and package
 
 ```sh
 npm run check
 npm test
+npm run build
 ```
 
-The Node built-in test runner checks game and storage behavior with no third-party
-test dependencies. GitHub Actions runs these checks when this component changes.
-See [QA notes](docs/QA.md) for browser coverage and remaining verification limits.
+The **42 tests** cover game rules, all six executable completion routes,
+progression, medals, storage migration/corruption, and static release integrity.
+GitHub Actions checks syntax, runs tests, and builds the static release.
+See [QA notes](docs/QA.md) for browser coverage and limits.
+
+The build writes only public game assets and the MIT license into `dist/`.
+Serve that directory with a static host or an HTTP server. It contains no legacy
+ML files, developer server, submission documents, or tests. No hosting account or
+deployment is required to play locally. The build refuses to overwrite an
+unrelated nonempty directory. See [release instructions](docs/RELEASING.md).
 
 ```text
-Human Game/
-  index.html, style.css, icon.svg   Interface and original vector artwork
-  serve.mjs                         Loopback-only static development server
-  src/engine.mjs                    Deterministic rules, independent of the DOM
-  src/app.mjs                       Rendering, controls, browser integration
-  src/storage.mjs                   Validated local preferences and scores
-  tests/                            Rules and persistence regression tests
-  ROADMAP.md                        Proposed work remaining after this starter
-  docs/                             Goal, architecture, QA, submission notes
+src/engine.mjs       Deterministic movement, collisions, energy, and game states
+src/levels.mjs       Six authored stages, unlock order, and medal rules
+src/storage.mjs      Backward-compatible, validated local saves
+src/audio.mjs        Optional original sound synthesis
+src/app.mjs          Canvas renderer, lessons, input, and interface
+scripts/build.mjs   Static release packaging
+tests/              Rules, persistence, campaign routes, and build verification
 ```
 
-## Project status
+## Ownership, license, and project status
 
-Version **0.1.0** is a playable foundation, created with AI coding assistance in the
-existing repository. It does not establish a long history of human maintenance,
-users, a deployment, or program eligibility. The [roadmap](ROADMAP.md) describes
-substantial unfinished game work; its estimates are planning estimates, not hours
-already worked. On 2026-10-17, the owner confirmed an intent to continue Switchback
-for at least 20 hours regardless of program acceptance and delegated selection
-of the next features.
+MIT; see the included [LICENSE](LICENSE), matching the repository's root license.
+The owner confirmed personal ownership and delegated feature decisions. The
+project was built with AI coding assistance in the existing repository, preserving
+its history. New source and interface artwork were created for this game.
 
-CC-CLI v2 applicants should read [submission notes](docs/SUBMISSION.md). The
-organizers must confirm whether they accept this gameplay-only component within
-a repository that also contains excluded ML projects.
-The [eligibility checklist](docs/ELIGIBILITY.md) records what has been verified
-and what still needs an organizer decision.
+Version **0.2.0** is a playable campaign and arcade release. A level editor, human
+replay tools, configurable controls/gamepad support, offline installation, and
+campaign expansion remain on the [24–34 hour roadmap](ROADMAP.md). Completed work
+is excluded from that estimate. The owner confirmed an intent to continue for at
+least 20 hours regardless of CC-CLI v2 acceptance.
 
-## License and contributions
-
-MIT. The included [LICENSE](LICENSE) matches the repository's top-level license.
-New artwork and game source were created for this component; it
-does not bundle third-party fonts, audio, datasets, or images.
-See the repository's [third-party notice](../THIRD_PARTY_NOTICES.md) for the older
-Snake font removal and remaining historical asset considerations.
-
-For a contribution, describe a reproducible gameplay issue or choose a roadmap
-item, preserve repository history, and include focused regression coverage for
-changed rules. Do not commit credentials or personal data. Keep changes to this
-component independent of the repository's ML code.
+The [submission notes](docs/SUBMISSION.md) and [eligibility evidence](docs/ELIGIBILITY.md)
+separate verified preparation from the program's review decision. Existing ML
+projects and historical assets elsewhere in this repository are disclosed in the
+root [third-party notice](../THIRD_PARTY_NOTICES.md).

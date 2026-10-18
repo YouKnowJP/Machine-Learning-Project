@@ -11,14 +11,15 @@ material, not an approval or legal/ownership certification.
 ## Scope clarification to send yourself
 
 > My public MIT-licensed repository contains older machine-learning projects and
-> a new, independently runnable human-played Snake game named Switchback in
+> an independently runnable human-played Snake game named Switchback in
 > `Human Game`. The existing repository history is preserved. The game has no
 > model dependencies, trained agent, inference, or model training/evaluation.
 >
-> I would propose only further gameplay development: authored campaign stages,
-> a local level editor, human-input replays, configurable controls, and offline
-> installation. I intend to continue this game for at least 20 hours regardless
-> of program acceptance; the selected unfinished backlog is estimated at 30–42 hours.
+> The game now has six campaign stages, guided lessons, saved medals, arcade
+> modes, swipe controls, and optional sound. I propose further gameplay work:
+> a local level editor, human-input replays, configurable input, offline
+> installation, and bonus-stage mechanics. I intend to continue this game for at least 20 hours regardless
+> of program acceptance; the selected unfinished backlog is estimated at 24–34 hours.
 >
 > Can that gameplay-only component qualify within this existing ML repository?
 > It is a newly created AI-assisted component, so I am also asking whether its
@@ -46,11 +47,12 @@ Explain the `Human Game` location in the description and comments.
 **Short description:**
 
 > Switchback is a human-played browser Snake game for short arcade challenges.
-> Players switch between two phases to collect matching energy and pass gates;
-> a classic mode and UTC-seeded daily route are also included. It is built with
+> Players switch between two phases to collect matching energy and pass gates
+> across six authored campaign stages; classic, endless, and UTC daily modes are
+> also included. It is built with
 > vanilla JavaScript, Canvas, HTML, and CSS, with local scores and no backend or
-> model dependencies. The proposed next work covers campaign levels, a local
-> level editor, replays, configurable controls, and offline installation.
+> model dependencies. The next work covers a local level editor, human-run replays, configurable
+> controls, offline installation, and bonus-stage mechanics.
 
 **License:** MIT, as shown in the repository's top-level LICENSE.
 

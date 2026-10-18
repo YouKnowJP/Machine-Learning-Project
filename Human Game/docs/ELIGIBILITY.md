@@ -13,14 +13,14 @@ checks and owner statements from decisions only the program can make.
 | README: purpose, audience, stack, run instructions | Root README links the component README; both explain setup and scope. | Verified |
 | Accepted root LICENSE | Root MIT LICENSE is present, with a matching component copy. | Verified for the owner's code |
 | Personal ownership; no employer/client/university/company/NDA claim | Owner explicitly confirmed entirely personal work on 2026-10-17. | Owner-confirmed; formal certification remains theirs |
-| 20+ hours of future work the owner intends to do anyway | Owner explicitly confirmed 20+ hours regardless of program acceptance. The selected unfinished roadmap estimates 30–42 hours. | Owner-confirmed; recheck remaining scope at submission |
+| 20+ hours of future work the owner intends to do anyway | Owner explicitly confirmed 20+ hours regardless of program acceptance. The selected unfinished roadmap estimates 24–34 hours. | Owner-confirmed; recheck remaining scope at submission |
 | No models or prohibited ML work in the proposed component | Human Game imports only its own browser modules and Node built-ins; it has no model or runtime package dependencies. Other repository directories contain model work and are disclosed. | Component verified; mixed-repository scope decision pending |
 | Real history and attributable commits | Original history retained; the implementation commit is linked to YouKnowJP on GitHub. | Verified for implementation; no backdating or history rewriting |
-| Active project with work ahead | Runnable game, regression tests, CI, a screenshot, changelog, and concrete future milestones. This component is newly created. | Evidence present; maturity/fit assessment pending |
+| Active project with work ahead | Six-stage campaign, guided lessons, saved medals, arcade modes, static packaging, 42 tests, CI, a screenshot, changelog, and concrete future milestones. This component is newly created. | Evidence present; maturity/fit assessment pending |
 | No committed secrets | Gitleaks scans reported no leaks in fetched history and game source; see QA.md. .env patterns are ignored. | No findings in performed scans; program scan still applies |
-| No personal/customer/regulated data in the game | Runtime stores only local settings and scores, with no names, accounts, telemetry, uploads, or remote APIs. All four historical CSV objects were validated as numeric digit pixels/labels or sequential image IDs; see QA.md. | Component and identified CSV schemas verified; no blanket certification of all historical assets |
+| No personal/customer/regulated data in the game | Runtime stores only local settings, progress, medals, and scores, with no names, accounts, telemetry, uploads, or remote APIs. All four historical CSV objects were validated as numeric digit pixels/labels or sequential image IDs; see QA.md. | Component and identified CSV schemas verified; no blanket certification of all historical assets |
 | Right to distribute assets | Human Game bundles original assets and no third-party font. Restricted Arial removed from the current tree; old renderer uses installed Pygame's default font. Historical copies remain disclosed. | Current-tree correction completed; historical handling pending |
-| Visible plan | ROADMAP.md separates completed starter work from 30–42 estimated future hours with acceptance criteria. | Verified |
+| Visible plan | ROADMAP.md separates completed starter work from 24–34 estimated future hours with acceptance criteria. | Verified |
 | Correct submission link | Use https://github.com/YouKnowJP/Machine-Learning-Project and describe Human Game in the form. | Draft prepared; no form submitted |
 
 ## Decisions still needed from organizers

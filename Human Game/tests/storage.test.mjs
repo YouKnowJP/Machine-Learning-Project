@@ -27,3 +27,26 @@ test('clearing removes persisted records', () => {
   const storage = memory(); saveProfile(storage, { ...emptyProfile(), bests: { 'phase:standard': 100 } });
   assert.equal(clearProfile(storage), true); assert.deepEqual(loadProfile(storage), emptyProfile());
 });
+
+test('v0.1 profiles retain their scores and gain safe campaign and sound defaults', () => {
+  const profile = loadProfile({ getItem: () => JSON.stringify({ bests: { 'phase:standard': 600 }, runs: [], difficulty: 'rush', contrast: true }) });
+  assert.equal(profile.bests['phase:standard'], 600); assert.deepEqual(profile.campaign, {});
+  assert.equal(profile.sound, false); assert.equal(profile.contrast, true);
+});
+test('completed stages preserve the best medal and move count across retries', () => {
+  const profile = emptyProfile(), game = createGame({ mode: 'campaign' });
+  game.status = 'won'; game.score = 300; game.ticks = 11; recordRun(profile, game);
+  game.ticks = 40; recordRun(profile, game);
+  assert.deepEqual(profile.campaign['first-light'], { medal: 3, ticks: 11 });
+  const storage = memory(); profile.sound = true; saveProfile(storage, profile);
+  assert.deepEqual(loadProfile(storage).campaign, profile.campaign); assert.equal(loadProfile(storage).sound, true);
+});
+test('a failed campaign attempt never unlocks a stage', () => {
+  const profile = emptyProfile(), game = createGame({ mode: 'campaign' });
+  game.status = 'over'; game.score = 100; recordRun(profile, game);
+  assert.deepEqual(profile.campaign, {});
+});
+test('malformed progress and unknown stages are discarded', () => {
+  const profile = loadProfile({ getItem: () => JSON.stringify({ campaign: { 'first-light': { medal: 9, ticks: 0 }, orbit: { medal: 2, ticks: 100 }, unknown: { medal: 3, ticks: 1 } } }) });
+  assert.deepEqual(profile.campaign, { orbit: { medal: 2, ticks: 100 } });
+});

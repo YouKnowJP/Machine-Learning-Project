@@ -3,9 +3,10 @@
 ## Human Game: Switchback
 
 [Switchback](Human%20Game/README.md) is a human-played browser Snake game with
-two-phase gates, a classic mode, daily seeded routes, keyboard/touch controls,
-and local scores. It is an independent game component and has no model training,
-inference, or ML dependencies. The existing machine-learning projects remain below.
+six campaign stages, guided lessons, saved medals, two-phase gates, arcade modes,
+keyboard/touch/swipe controls, optional sound, and local scores. It is an independent
+game component and has no model training, inference, or ML dependencies. The existing
+machine-learning projects remain below.
 
 ```sh
 git clone https://github.com/YouKnowJP/Machine-Learning-Project.git

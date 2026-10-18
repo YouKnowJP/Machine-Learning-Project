@@ -1,4 +1,10 @@
-# Verification record for v0.1.0
+# Verification record
+
+Current release: **v0.2.0**, with 42 passing automated tests. Current campaign
+and browser results are recorded in the v0.2.0 section below. Earlier checks are
+retained as historical evidence for the original release and font correction.
+
+## Original v0.1.0 checks
 
 Checked on **2026-10-17 (America/Los_Angeles)** in the development workspace.
 
@@ -67,7 +73,8 @@ or the organizers' independent scan. No history was rewritten.
 - Existing ML code and third-party assets elsewhere in the repository were not
   relicensed or certified by creating this component.
 - No deployment, external user base, organizer clearance, or onboarding is claimed.
-- Campaign, level editor, replays, and offline installation remain on the roadmap.
+- At v0.1.0, campaign, level editor, replays, and offline installation remained on
+  the roadmap. Campaign was delivered in v0.2.0; the updated roadmap excludes it.
 
 ## Submission correction verification — 2026-10-17
 
@@ -91,3 +98,32 @@ or the organizers' independent scan. No history was rewritten.
   and `ELIGIBILITY.md`; current-tree removal does not grant historical rights.
 - Owner confirmed entirely personal work and 20+ hours of development regardless
   of acceptance. No organizer scope or history-remediation decision has been received.
+
+## v0.2.0 campaign release verification
+
+- `npm run check` passed. **42 automated tests passed**, including all original
+  rules, six authored completion fixtures, stage data integrity, unlock ordering,
+  move-based medals, progress retention, v0.1 save migration, and static build safety.
+- Every stage was completed through the actual browser interface using synthetic
+  input fixtures: First Light 11 moves, Crosscurrent 37, Slalom 57, Double Lock 67,
+  Orbit 45, Afterglow 73. Each awarded Gold and saved; reload showed six completions
+  and six unlocked stages. These are QA runs, not claims about real users.
+- First Light automatically paused at its first two instruction milestones,
+  resumed correctly, completed through its mint gate, unlocked Crosscurrent, and
+  advanced through the Next stage button. Reload recommended the first unfinished stage.
+- Real button clicks enabled and muted synthesized sound with no page errors.
+  At 390×844, a touch pointer swipe moved the rendered snake down and pause worked;
+  the page had no horizontal overflow. This is browser emulation, not an actual phone test.
+- Clearing recent history preserved campaign progress. Cancelling campaign reset
+  preserved it; accepting reset cleared completions and relocked later stages.
+- Confirmed both native browser reset-dialog choices separately. With browser
+  storage access blocked, the game loaded without page errors and clearing history
+  correctly reported that only the current visit could be updated.
+- At 1366×768 the campaign board fit within the viewport after starting a run.
+- Static build tests verified complete relative module imports, included license,
+  exclusion of developer/submission files, stale-file removal, and protection of
+  unrelated nonempty directories.
+- The runtime has no solver, model, external sound files, telemetry, or remote API.
+  Scripted completion fixtures live only in tests and are excluded from the build.
+- Actual-device, Firefox/Safari, gamepad, and assistive-technology checks remain
+  future work. No deployment, established player base, or program clearance is claimed.

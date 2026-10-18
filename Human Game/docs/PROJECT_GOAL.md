@@ -9,7 +9,9 @@ reviewable CC-CLI v2 submission; onboarding remains the program's decision.
 
 - [x] A working human-controlled game with a distinctive two-phase mechanic.
 - [x] A simple documented launch path without accounts, tokens, or model services.
-- [x] A classic mode, daily seeds, local records, pause, retry, and basic touch input.
+- [x] Six-stage campaign, guided lessons, unlocks, medals, and saved progress.
+- [x] Classic, endless, daily seeds, local records, pause/retry, and touch/swipe input.
+- [x] Optional original sound, backward-compatible saves, and static release packaging.
 - [x] MIT license, useful README, focused tests, and a CI workflow.
 - [x] Explicit future work with estimates separate from completed starter work.
 - [ ] Full cross-browser and actual touch-device verification.
@@ -25,7 +27,7 @@ reviewable CC-CLI v2 submission; onboarding remains the program's decision.
       does not replace the program's certification.
 - [x] Owner confirmed on 2026-10-17 an intent to continue Switchback for at least
       20 hours even if CC-CLI v2 does not accept it, and delegated feature selection.
-      The selected unfinished roadmap is estimated at 30–42 hours.
+      The selected unfinished roadmap is estimated at 24–34 hours.
 - [x] Removed the restricted bundled Arial file from the current repository tree
       and changed the older renderer to the installed Pygame default font.
 - [ ] Organizers accept the documented handling of historical Arial copies.

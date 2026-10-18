@@ -2,6 +2,7 @@
 # Byte-compiled / optimized / DLL files
 .DS_Store
 node_modules/
+.switchback-build-*/
 .env.*
 !.env.example
 .playwright-mcp/

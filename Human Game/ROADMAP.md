@@ -1,35 +1,33 @@
-# Work remaining after v0.1.0
+# Work remaining after v0.2.0
 
-This is the selected **30–42 hour** next-phase backlog for a human-played game.
-On 2026-10-17, the owner delegated feature selection to the coding assistant;
-the milestones below prioritize interesting gameplay and practical game tools.
-None is implemented in the starter release. On 2026-10-17, the owner explicitly
-confirmed an intent to continue Switchback for at least 20 hours even if CC-CLI v2
-does not accept it. This is an owner statement, not an organizer decision.
-Re-estimate after discovery and keep at least 20 hours of genuine unfinished work
-at submission; do not claim estimates as time already worked.
+The owner delegated feature decisions and confirmed an intent to continue
+Switchback for at least 20 hours regardless of CC-CLI v2 acceptance. The selected
+next phase is estimated at **24–34 hours**. These estimates describe unfinished
+work, not time already worked or a program approval. Re-estimate as work progresses.
 
 | Priority | Deliverable | Estimate | Acceptance criteria |
 | --- | --- | --- | --- |
-| 1 | Authored campaign and progression | 6–8 h | At least six distinct, completable stages with objectives, stage selection, progression saves, a win screen, and migration tests. Stages must offer different decisions rather than palette swaps. |
-| 2 | Local level editor and validation | 6–8 h | Place walls, gates, start positions, and objectives; undo/redo; preview a stage; import/export a versioned JSON format. Reject malformed, out-of-bounds, overlapping, or oversized levels without breaking the game. |
-| 3 | Deterministic replay recorder and viewer | 6–8 h | Record tick-indexed turns and shifts with engine version and seed; export/import a bounded JSON file; pause and change playback speed; reproduce a run exactly. No trained agent or model comparisons. |
-| 4 | Configurable controls and accessibility | 4–6 h | Remap keys, add left/right handed touch layouts and gamepad input, handle disconnects, provide a slow practice mode, and verify focus order, reduced motion, and gate symbols. Document canvas accessibility limitations. |
-| 5 | Offline installation and device validation | 4–6 h | Add a manifest and versioned offline cache; exercise update behavior; test desktop and actual touch devices; document installation and recovery. No accounts or online scores. |
-| 6 | Gameplay polish and release preparation | 4–6 h | Add original optional sound effects with mute; improve feedback and stage pacing through the owner's playtests; resolve reproducible bugs; publish a changelog and release checklist. Store no other person's personal data. |
-| | **Total proposed work remaining** | **30–42 h** | Completion is demonstrated by code, tests, and clear release notes. |
+| 1 | Local level editor and validation | 6–8 h | Place walls, gates, starts, and energy targets; undo/redo; preview a stage; import/export versioned JSON. Reject malformed, overlapping, out-of-bounds, and oversized input. Keep the authored campaign intact. |
+| 2 | Human-run replay recorder and viewer | 6–8 h | Record tick-indexed turns/shifts, stage or seed, and engine version. Export/import bounded JSON; pause and change playback speed; reproduce results exactly and reject incompatible versions. No learned player or model evaluation. |
+| 3 | Configurable input and accessibility | 4–6 h | Remap controls, add left/right-handed touch layouts and gamepad input/disconnect handling, and verify focus/live-region behavior with assistive technology. Basic touch, swipe, symbols, and high contrast already exist and are excluded. |
+| 4 | Offline installation and update handling | 4–6 h | Add install metadata and a versioned offline cache; handle interrupted upgrades and stale saves; test on actual phones/tablets and desktop browsers. The static build is already complete and is excluded. |
+| 5 | Bonus-stage mechanics and campaign balancing | 4–6 h | Add switch-activated gates and limited-shift objectives, at least three bonus stages, rule tests, and calibrated medal targets from the owner's playtests. Existing six stages, lessons, sound, and medals are excluded. |
+| | **Total unfinished work** | **24–34 h** | Show completion through code, behavior checks, and release notes. |
 
-## Already implemented; excluded from the remaining estimate
+## Already delivered; excluded from the estimate
 
-- Human-controlled Phase run, Classic, and UTC daily seed modes.
-- Two-phase gate and food rules; safe turn buffering; pause and retry.
-- Keyboard and basic touch controls, local records, and a high-contrast option.
-- Dependency-free development server, automated rules/storage checks, and CI.
-- Setup instructions, architecture, goal, and submission planning documents.
+- Six authored stages with distinct layouts and verified completion routes.
+- Guided First Light lessons, stage unlocks, saved progress, and route medals.
+- Phase run, Classic, and UTC daily arcade modes; local scores and adjustable pace.
+- Keyboard, touch buttons, swipe steering, pause/retry, high contrast, and optional
+  original synthesized sound.
+- Backward-compatible saves and separate recent-history/campaign reset controls.
+- Dependency-free development server, public-asset build, 42 tests, CI, and release docs.
+- Setup, architecture, ownership/eligibility evidence, and submission draft.
 
 ## Boundaries
 
-The proposed work does not include neural networks, RL, model training, model
-evaluation, model inference, ML infrastructure, or data creation for those uses.
-Future replays are for reproducing human gameplay and debugging game rules.
-There is no promise that the program will approve this repository or backlog.
+This is a human-played game. The future work includes no model development,
+training, evaluation, inference, ML infrastructure, or data creation for those uses.
+Replay tools reproduce human input for practice and debugging. No personal or
+customer data is needed. Program acceptance remains the organizers' decision.

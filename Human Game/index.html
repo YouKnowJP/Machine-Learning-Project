@@ -14,12 +14,12 @@
   <div class="shell">
     <header class="site-header">
       <a class="brand" href="./" aria-label="Switchback home"><img src="icon.svg" width="34" height="34" alt=""><span>SWITCHBACK<span class="brand-dot">●</span></span></a>
-      <nav aria-label="Main navigation"><a href="#field-guide">Field guide <span aria-hidden="true">↗</span></a><span class="edition">HUMAN GAME / 001</span></nav>
+      <nav aria-label="Main navigation"><a href="#field-guide">Field guide <span aria-hidden="true">↗</span></a><span class="edition">HUMAN GAME / 002</span></nav>
     </header>
 
     <main>
       <section class="intro" aria-labelledby="title">
-        <div><p class="eyebrow"><span class="status-dot"></span> AN ARCADE EXPERIMENT</p><h1 id="title">Find your <em>flow.</em></h1><p class="intro-copy">A familiar game. A different rhythm.<br>Change your phase. Thread the gates. Keep moving.</p></div>
+        <div><p class="eyebrow"><span class="status-dot"></span> SIX CIRCUITS. ENDLESS DETOURS.</p><h1 id="title">Find your <em>flow.</em></h1><p class="intro-copy">Learn the rhythm. Master six circuits.<br>Change your phase, thread the gates, and make every turn count.</p></div>
         <div class="intro-mark" aria-hidden="true"><svg viewBox="0 0 150 95"><path d="M8 70h38V25h48v45h40"/><path class="amber-line" d="M94 70h40"/><circle cx="134" cy="70" r="7"/></svg><span>ONE MORE TURN.</span></div>
       </section>
 
@@ -29,6 +29,11 @@
             <div><span class="micro">SCORE</span><strong id="score">0000</strong></div>
             <div><span class="micro">ROUTE BEST</span><strong id="best">0000</strong></div>
             <div class="phase-stat"><span class="micro">YOUR PHASE</span><strong id="phase-label"><span aria-hidden="true">●</span> MINT</strong></div>
+          </div>
+          <div class="objective-bar" id="objective-bar">
+            <div><span class="micro" id="objective-name">1 / 6 · First Light</span><p id="objective-detail">0/3 energy · Gold ≤ 14 moves</p></div>
+            <div class="move-counter"><strong id="move-count">0</strong><span class="micro">MOVES</span></div>
+            <progress id="stage-progress" value="0" max="3" aria-label="Stage energy collected"></progress>
           </div>
           <div class="board-frame">
             <div class="board-corner top-left" aria-hidden="true"></div><div class="board-corner bottom-right" aria-hidden="true"></div>
@@ -45,21 +50,27 @@
         <aside class="sidebar" aria-label="Route settings and records">
           <section class="panel route-panel"><div class="section-label"><span>01 / PICK YOUR ROUTE</span><span aria-hidden="true">↗</span></div>
             <div class="mode-options" role="group" aria-label="Game mode">
-              <button class="mode active" data-mode="phase" aria-pressed="true"><span class="mode-icon" aria-hidden="true">⇄</span><span><strong>Phase run</strong><small>Two colors. One way forward.</small></span><span class="radio" aria-hidden="true"></span></button>
+              <button class="mode active" data-mode="campaign" aria-pressed="true"><span class="mode-icon" aria-hidden="true">◇</span><span><strong>Campaign</strong><small>Six stages. Find your rhythm.</small></span><span class="radio" aria-hidden="true"></span></button>
+              <button class="mode" data-mode="phase" aria-pressed="false"><span class="mode-icon" aria-hidden="true">⇄</span><span><strong>Phase run</strong><small>Two colors. One way forward.</small></span><span class="radio" aria-hidden="true"></span></button>
               <button class="mode" data-mode="classic" aria-pressed="false"><span class="mode-icon" aria-hidden="true">↳</span><span><strong>Classic</strong><small>Just you and the next turn.</small></span><span class="radio" aria-hidden="true"></span></button>
               <button class="mode" data-mode="daily" aria-pressed="false"><span class="mode-icon" aria-hidden="true">☼</span><span><strong>Daily circuit</strong><small>A shared starting seed. UTC daily.</small></span><span class="radio" aria-hidden="true"></span></button>
             </div>
+            <div class="campaign-section" id="campaign-section">
+              <div class="campaign-heading"><span class="micro" id="campaign-count">0 / 6 COMPLETE</span><button class="text-button" id="reset-campaign" disabled>Reset</button></div>
+              <div id="stages" class="stage-grid" role="group" aria-label="Campaign stages"></div>
+              <p id="stage-tip" class="stage-tip">Move right to the mint circle. Arrow keys or WASD steer your snake.</p>
+            </div>
             <div class="setting-row"><label for="difficulty">Pace</label><select id="difficulty"><option value="cruise">Cruise</option><option value="standard" selected>Standard</option><option value="rush">Rush</option></select></div>
-            <div class="seed-setting"><label class="micro" for="seed">ROUTE SEED</label><div class="seed-input"><input id="seed" maxlength="48" value="first-light" autocomplete="off" spellcheck="false"><button id="shuffle" class="icon-button" aria-label="Generate a new route seed" title="New route seed">↻</button></div><p id="seed-note">Same seed + pace + moves = same run.</p></div>
+            <div class="seed-setting" id="seed-setting" hidden><label class="micro" for="seed">ROUTE SEED</label><div class="seed-input"><input id="seed" maxlength="48" value="first-light" autocomplete="off" spellcheck="false"><button id="shuffle" class="icon-button" aria-label="Generate a new route seed" title="New route seed">↻</button></div><p id="seed-note">Same seed + pace + moves = same run.</p></div>
           </section>
           <section class="panel mission-panel"><div class="section-label"><span>02 / THE OBJECTIVE</span><span class="target-icon" aria-hidden="true">◎</span></div><h3 id="mission-title">Match. Collect.<br>Switch. Repeat.</h3><p id="mission-copy">Mint circles. Amber diamonds. Your head must match the energy and the gate you enter.</p><div class="target-row"><span class="energy-icon" id="target-icon" aria-hidden="true">●</span><div><span class="micro">NEXT ENERGY</span><strong id="target-label">Mint · +100</strong></div><span id="collected">0 collected</span></div><button class="shift-button" id="shift">Shift phase <kbd>SPACE</kbd></button></section>
-          <section class="panel records-panel"><div class="section-label"><span>03 / LAST FIVE RUNS</span><button id="clear-records" class="text-button">Clear</button></div><ol id="runs" class="runs"></ol><p class="storage-note" id="storage-note">Saved in this browser. No account needed.</p></section>
+          <section class="panel records-panel"><div class="section-label"><span>03 / LAST FIVE RUNS</span><button id="clear-records" class="text-button">Clear history</button></div><ol id="runs" class="runs"></ol><p class="storage-note" id="storage-note">Scores, medals, and settings stay in this browser.</p></section>
         </aside>
       </section>
 
-      <section class="field-guide" id="field-guide" aria-labelledby="guide-title"><div class="guide-heading"><p class="eyebrow">A QUICK FIELD GUIDE</p><h2 id="guide-title">Easy to learn.<br><span>Hard to leave.</span></h2></div><div class="guide-item"><span class="guide-number">01</span><h3>Find a line.</h3><p>Use arrow keys, WASD, or the on-screen arrows. Eat energy to grow. Edges, solid blocks, and your body end the run.</p></div><div class="guide-item"><span class="guide-number">02</span><h3>Time the switch.</h3><p>Press Space to swap mint and amber. Match a gate before entering. Unmatched energy stays on the board. Classic skips phases.</p></div><div class="guide-item"><span class="guide-number">03</span><h3>Go again.</h3><p>Each energy is 100 points. The pace rises gently. Press P to pause, R for a fresh run, or replay a seed to practice your route.</p></div></section>
+      <section class="field-guide" id="field-guide" aria-labelledby="guide-title"><div class="guide-heading"><p class="eyebrow">A QUICK FIELD GUIDE</p><h2 id="guide-title">Easy to learn.<br><span>Hard to leave.</span></h2></div><div class="guide-item"><span class="guide-number">01</span><h3>Find a line.</h3><p>Start with First Light for a guided lesson. Turn with arrows, WASD, touch buttons, or a swipe on the board. Eat energy to grow.</p></div><div class="guide-item"><span class="guide-number">02</span><h3>Time the switch.</h3><p>Press Space to swap mint and amber. Match a gate before entering. Unmatched energy stays on the board. Classic skips phases.</p></div><div class="guide-item"><span class="guide-number">03</span><h3>Light the circuit.</h3><p>Clear stages to unlock the next. Earn Gold within the move target, Silver within 1.5×, or Bronze for finishing. P pauses; R retries.</p></div></section>
     </main>
-    <footer><span>BUILT FOR HUMAN HANDS.</span><div><button id="contrast" class="text-button" aria-pressed="false">High contrast: off</button><a href="https://github.com/YouKnowJP/Machine-Learning-Project" target="_blank" rel="noopener noreferrer">Source code ↗</a><span>v0.1.0</span></div></footer>
+    <footer><span>BUILT FOR HUMAN HANDS.</span><div><button id="sound" class="text-button" aria-pressed="false">Sound: off</button><button id="contrast" class="text-button" aria-pressed="false">High contrast: off</button><a href="https://github.com/YouKnowJP/Machine-Learning-Project" target="_blank" rel="noopener noreferrer">Source code ↗</a><span>v0.2.0</span></div></footer>
     <div id="toast" role="status" aria-live="polite"></div>
   </div>
   <script type="module" src="src/app.mjs"></script>

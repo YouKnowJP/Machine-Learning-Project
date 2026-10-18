@@ -1,6 +1,7 @@
 // Pure game rules. No DOM, clock, storage, network, or learned policy.
+import { getLevel } from './levels.mjs';
 export const SIZE = 24;
-export const VERSION = 1;
+export const VERSION = 2;
 export const DIRECTIONS = Object.freeze({
   up: { x: 0, y: -1 }, right: { x: 1, y: 0 },
   down: { x: 0, y: 1 }, left: { x: -1, y: 0 },
@@ -45,6 +46,16 @@ export function makeArena(mode, seed) {
 }
 
 function spawnFood(game) {
+  if (game.mode === 'campaign') {
+    const level = getLevel(game.levelId);
+    if (game.collected === level.foods.length) {
+      game.food = null; game.status = 'won';
+      game.reason = `${level.name} complete in ${game.ticks} moves.`;
+    } else {
+      game.food = { ...level.foods[game.collected] };
+    }
+    return;
+  }
   const blocked = new Set([...game.snake, ...game.walls, ...game.gates].map(key));
   const empty = [];
   for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) {
@@ -60,16 +71,20 @@ function spawnFood(game) {
   game.food = { ...position, phase: game.mode === 'classic' ? 0 : game.collected % 2 };
 }
 
-export function createGame({ mode = 'phase', difficulty = 'standard', seed = 'switchback' } = {}) {
-  if (!['phase', 'classic', 'daily'].includes(mode)) throw new Error('Unknown game mode');
+export function createGame({ mode = 'phase', difficulty = 'standard', seed = 'switchback', levelId = 'first-light' } = {}) {
+  if (!['phase', 'classic', 'daily', 'campaign'].includes(mode)) throw new Error('Unknown game mode');
   if (!Object.hasOwn(SPEEDS, difficulty)) throw new Error('Unknown difficulty');
   if (typeof seed !== 'string' || seed.length > 80 || !seed.trim()) throw new Error('Invalid route seed');
+  const level = mode === 'campaign' ? getLevel(levelId) : null;
+  if (level) seed = `campaign:${level.id}`;
+  const arena = level ? { walls: level.walls.map(point => ({ ...point })), gates: level.gates.map(point => ({ ...point })) } : makeArena(mode, seed);
   const game = {
     version: VERSION, mode, difficulty: mode === 'daily' ? 'standard' : difficulty,
     seed, rng: hashSeed(seed) || 1, status: 'ready', reason: '',
     snake: [5, 4, 3, 2].map(x => ({ x, y: 12, phase: 0 })),
     direction: 'right', queued: null, phase: 0, score: 0, collected: 0,
-    ticks: 0, switches: 0, food: null, ...makeArena(mode, seed),
+    ticks: 0, switches: 0, food: null, levelId: level?.id || null,
+    target: level?.foods.length || null, ...arena,
   };
   spawnFood(game);
   return game;
@@ -134,10 +149,11 @@ export function step(game) {
 }
 
 export function tickDuration(game) {
+  if (game.mode === 'campaign' && game.levelId === 'first-light') return 220;
   // Readable early game, then a gentle ramp with a lower bound.
   return Math.max(65, SPEEDS[game.difficulty] - Math.floor(game.collected / 3) * 5);
 }
 
 export function scoreKey(game) {
-  return `${game.mode}:${game.difficulty}${game.mode === 'daily' ? `:${game.seed}` : ''}`;
+  return `${game.mode}:${game.difficulty}${game.mode === 'daily' ? `:${game.seed}` : game.mode === 'campaign' ? `:${game.levelId}` : ''}`;
 }
